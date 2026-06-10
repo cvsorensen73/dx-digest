@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(chmod +x \"/Users/srensen/Development/DX Digest/run.sh\")",
+      "Bash(mkdir -p \"/Users/srensen/Development/DX Digest/.claude\")",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(mkdir -p \"/Users/srensen/.claude/projects/-Users-srensen-Development-DX-Digest/memory\")",
+      "WebSearch"
+    ]
+  }
+}

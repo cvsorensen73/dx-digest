@@ -1,0 +1,40 @@
+name: Weekly DX Digest
+
+on:
+  schedule:
+    - cron: "0 6 * * 1"   # Every Monday at 07:00 CET (06:00 UTC)
+  workflow_dispatch:        # Enable manual "Run workflow" button in GitHub UI
+
+permissions:
+  contents: write           # Needed to commit docs/index.html back to the repo
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run digest
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          NEWSAPI_KEY:        ${{ secrets.NEWSAPI_KEY }}
+          NOTION_TOKEN:       ${{ secrets.NOTION_TOKEN }}
+          NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
+        run: python digest.py
+
+      - name: Commit updated digest
+        run: |
+          git config user.name  "DX Digest Bot"
+          git config user.email "dx-digest@users.noreply.github.com"
+          git add docs/index.html
+          git diff --staged --quiet \
+            || git commit -m "Weekly digest: $(date -u +%Y-%m-%d)"
+          git push

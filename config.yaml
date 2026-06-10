@@ -1,0 +1,26 @@
+ai_model: claude-sonnet-4-6
+max_articles_per_customer: 12
+min_relevance_score: 6      # articles below this are dropped (0–10 scale)
+nordic_bonus: 1             # added to score for Nordic-specific content
+
+# Global RSS feeds fetched for all customers
+rss_feeds:
+  - https://www.finextra.com/rss/headlines.aspx
+  - https://www.thefinancialbrand.com/feed/
+  - https://bankingdive.com/feeds/news/
+  - https://tearsheet.co/feed/
+  - "https://news.google.com/rss/search?q=Nordic+bank+digital+transformation&hl=en-US&gl=US&ceid=US:en"
+  - "https://news.google.com/rss/search?q=digital+banking+customer+experience+Europe&hl=en-US&gl=US&ceid=US:en"
+  - "https://news.google.com/rss/search?q=open+banking+PSD3+Nordic&hl=en-US&gl=US&ceid=US:en"
+  - "https://news.google.com/rss/search?q=bank+AI+personalisation+CX&hl=en-US&gl=US&ceid=US:en"
+  - "https://news.google.com/rss/search?q=fintech+payments+Europe+2025&hl=en-US&gl=US&ceid=US:en"
+  - "https://news.google.com/rss/search?q=insurance+digital+transformation+Nordic&hl=en-US&gl=US&ceid=US:en"
+
+# Requires NEWSAPI_KEY env var (free tier: newsapi.org)
+newsapi_queries:
+  - "digital banking customer experience Nordic"
+  - "Nordic bank technology 2025"
+  - "open banking PSD3 regulation"
+  - "bank AI personalisation Europe"
+  - "payments fintech Nordics"
+  - "insurance digital claims Nordic"
