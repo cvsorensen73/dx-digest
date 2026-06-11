@@ -151,6 +151,7 @@ def process_customer(
     if not articles:
         return {**customer, "articles": [], "actions": []}
 
+    articles = prefilter_for_customer(articles, customer)
     min_score = config.get("min_relevance_score", 6)
     nordic_bonus = config.get("nordic_bonus", 1)
     limit = config.get("max_articles_per_customer", 12)
@@ -188,7 +189,7 @@ Only include articles with final score >= {min_score}.\
     try:
         response = client.messages.create(
             model=config.get("ai_model", "claude-sonnet-4-6"),
-            max_tokens=4096,
+            max_tokens=8192,
             system=[{"type": "text", "text": _SYSTEM, "cache_control": {"type": "ephemeral"}}],
             messages=[{"role": "user", "content": prompt}],
         )
@@ -259,6 +260,32 @@ def _url_id(url: str) -> str:
     """Short stable ID derived from URL for use in localStorage keys."""
     import hashlib
     return hashlib.md5(url.encode()).hexdigest()[:12]
+
+
+def prefilter_for_customer(articles: list[dict], customer: dict, max_candidates: int = 60) -> list[dict]:
+    """
+    Fast keyword pre-filter before calling Claude. Scores each article by how many
+    customer-relevant terms appear in its title+snippet, then returns the top N.
+    This avoids sending hundreds of irrelevant articles to the AI.
+    """
+    name_parts = customer["name"].lower().split()
+    industry_parts = [w for w in customer["industry"].lower().replace("/", " ").split() if len(w) > 3]
+    region_parts = [w for w in customer["region"].lower().replace(",", " ").split() if len(w) > 3]
+
+    # High-value terms score 3; industry/region terms score 1
+    high_terms = name_parts
+    low_terms = industry_parts + region_parts + ["digital", "ai", "technology", "innovation",
+                                                  "customer", "platform", "data", "cloud", "nordic",
+                                                  "scandinavian", "fintech", "banking", "insurance"]
+
+    def score(a: dict) -> int:
+        text = (a["title"] + " " + a["snippet"]).lower()
+        return sum(3 for t in high_terms if t in text) + sum(1 for t in low_terms if t in text)
+
+    scored = sorted(articles, key=score, reverse=True)
+    top = scored[:max_candidates]
+    log.info("%s: pre-filter %d → %d candidates", customer["name"], len(articles), len(top))
+    return top
 
 
 # ── HTML render ───────────────────────────────────────────────────────────────
