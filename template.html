@@ -3,90 +3,103 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DX Digest · TAM Intelligence Dashboard</title>
+  <title>DX Digest · TAM Intelligence</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --navy:    #00304E;
-      --blue:    #005F9E;
-      --accent:  #0080C9;
-      --light:   #F0F5FA;
-      --border:  #D8E4EE;
-      --text:    #1A2634;
-      --muted:   #637080;
-      --green:   #16A34A;
-      --amber:   #D97706;
-      --card-r:  10px;
+      /* Adobe brand palette */
+      --adobe-red:   #FA0F00;
+      --dark-1:      #1B1B1B;
+      --dark-2:      #2C2C2C;
+      --dark-3:      #3D3D3D;
+      --gray-1:      #505050;
+      --gray-2:      #6E6E6E;
+      --gray-3:      #B3B3B3;
+      --gray-4:      #EAEAEA;
+      --gray-5:      #F5F5F5;
+      --white:       #FFFFFF;
+      --text:        #1B1B1B;
+      --text-muted:  #6E6E6E;
+      --border:      #E1E1E1;
+      --card-r:      6px;
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: var(--light);
+      font-family: "Adobe Clean", adobe-clean, "Source Sans Pro", -apple-system, BlinkMacSystemFont,
+                   "Segoe UI", Roboto, sans-serif;
+      background: var(--gray-5);
       color: var(--text);
       line-height: 1.6;
     }
 
     /* ── Header ── */
     header {
-      background: var(--navy);
-      color: #fff;
-      padding: 2rem 1.5rem 1.5rem;
-      text-align: center;
-    }
-    header .eyebrow {
-      font-size: 0.72rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      opacity: 0.55;
-      margin-bottom: 0.4rem;
-    }
-    header h1 { font-size: 1.9rem; font-weight: 700; letter-spacing: -0.02em; }
-    header h1 span { color: #5BB8FF; }
-    header .sub { margin-top: 0.35rem; font-size: 0.85rem; opacity: 0.65; }
-
-    .meta-bar {
-      background: var(--blue);
-      color: rgba(255,255,255,0.85);
-      font-size: 0.8rem;
-      padding: 0.45rem 1.5rem;
+      background: var(--dark-1);
+      color: var(--white);
+      padding: 2rem 2rem 1.75rem;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 0.4rem;
+      gap: 1.5rem;
     }
+    .adobe-logo {
+      flex-shrink: 0;
+    }
+    .adobe-logo svg { display: block; }
+    .header-text { flex: 1; }
+    .header-text .product-name {
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      color: var(--white);
+      line-height: 1.2;
+    }
+    .header-text .product-sub {
+      font-size: 0.8rem;
+      color: var(--gray-3);
+      margin-top: 0.2rem;
+    }
+    .header-meta {
+      text-align: right;
+      font-size: 0.78rem;
+      color: var(--gray-3);
+      line-height: 1.5;
+    }
+    .header-meta .week { font-weight: 600; color: var(--white); }
 
     /* ── Tabs ── */
+    .tabs-wrap {
+      background: var(--dark-2);
+      border-bottom: 1px solid var(--dark-3);
+    }
     .tabs {
-      background: #fff;
-      border-bottom: 2px solid var(--border);
-      display: flex;
-      padding: 0 1.5rem;
       max-width: 1200px;
       margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
     }
     .tab-btn {
       background: none;
       border: none;
-      border-bottom: 3px solid transparent;
+      border-bottom: 2px solid transparent;
       cursor: pointer;
-      font-size: 0.9rem;
+      font-size: 0.83rem;
       font-weight: 600;
-      color: var(--muted);
-      padding: 0.85rem 1.25rem;
-      margin-bottom: -2px;
+      color: var(--gray-3);
+      padding: 0.85rem 1rem;
+      margin-bottom: -1px;
+      letter-spacing: 0.01em;
       transition: color 0.15s, border-color 0.15s;
     }
-    .tab-btn:hover { color: var(--text); }
-    .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+    .tab-btn:hover { color: var(--white); }
+    .tab-btn.active { color: var(--white); border-bottom-color: var(--adobe-red); }
     .tab-badge {
-      background: var(--accent);
-      color: #fff;
+      background: var(--adobe-red);
+      color: var(--white);
       border-radius: 10px;
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       font-weight: 700;
-      padding: 0.1rem 0.45rem;
+      padding: 0.1rem 0.42rem;
       margin-left: 0.35rem;
     }
 
@@ -94,36 +107,35 @@
     .tab-panel { display: none; }
     .tab-panel.active { display: block; }
 
-    /* ── Layout ── */
+    /* ── Page layout ── */
     .page {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 2rem 1.5rem 5rem;
+      padding: 2rem 2rem 5rem;
     }
 
     /* ── Summary box ── */
     .summary-box {
-      background: #fff;
+      background: var(--white);
       border: 1px solid var(--border);
-      border-left: 4px solid var(--accent);
+      border-top: 3px solid var(--adobe-red);
       border-radius: var(--card-r);
       padding: 1.25rem 1.5rem;
       margin-bottom: 2.5rem;
     }
     .summary-box .label {
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       font-weight: 700;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--accent);
+      color: var(--adobe-red);
       margin-bottom: 0.5rem;
     }
-    .summary-box p { font-size: 0.95rem; color: var(--text); line-height: 1.65; }
+    .summary-box p { font-size: 0.93rem; color: var(--text); line-height: 1.7; }
 
     /* ── Customer section ── */
-    .customer-section {
-      margin-bottom: 2.5rem;
-    }
+    .customer-section { margin-bottom: 2.25rem; }
+
     .customer-header {
       display: flex;
       align-items: center;
@@ -132,58 +144,59 @@
       cursor: pointer;
       user-select: none;
     }
+    .customer-header .cust-mark {
+      width: 3px;
+      height: 1.4rem;
+      background: var(--adobe-red);
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
     .customer-header h2 {
-      font-size: 1.15rem;
+      font-size: 1.1rem;
       font-weight: 700;
-      color: var(--navy);
+      color: var(--dark-1);
       flex: 1;
+      letter-spacing: -0.01em;
     }
-    .customer-header .industry-tag {
-      font-size: 0.72rem;
+    .industry-tag {
+      font-size: 0.7rem;
       font-weight: 600;
-      color: var(--muted);
-      background: var(--light);
+      color: var(--gray-2);
+      background: var(--gray-5);
       border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 0.2rem 0.6rem;
+      border-radius: 3px;
+      padding: 0.18rem 0.55rem;
+      letter-spacing: 0.02em;
     }
-    .customer-header .article-count {
-      font-size: 0.75rem;
-      color: var(--muted);
-      white-space: nowrap;
-    }
-    .customer-header .chevron {
-      color: var(--muted);
-      font-size: 0.85rem;
-      transition: transform 0.2s;
-    }
+    .article-count { font-size: 0.75rem; color: var(--gray-3); white-space: nowrap; }
+    .chevron { color: var(--gray-3); font-size: 0.8rem; transition: transform 0.2s; }
     .customer-section.collapsed .chevron { transform: rotate(-90deg); }
-    .customer-body { }
     .customer-section.collapsed .customer-body { display: none; }
 
     /* ── Actions panel ── */
     .actions-panel {
-      background: #F0FAF4;
-      border: 1px solid #BBF0D0;
+      background: #FFF8F7;
+      border: 1px solid #FDD5D3;
+      border-left: 3px solid var(--adobe-red);
       border-radius: var(--card-r);
       padding: 1rem 1.25rem;
       margin-bottom: 1.25rem;
     }
     .actions-panel .actions-label {
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       font-weight: 700;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--green);
+      color: var(--adobe-red);
       margin-bottom: 0.6rem;
     }
     .actions-panel ol {
-      padding-left: 1.25rem;
+      padding-left: 1.2rem;
       display: flex;
       flex-direction: column;
       gap: 0.4rem;
     }
-    .actions-panel li { font-size: 0.88rem; color: #1A3A2A; line-height: 1.5; }
+    .actions-panel li { font-size: 0.87rem; color: #3D1A18; line-height: 1.55; }
 
     /* ── Article grid ── */
     .article-grid {
@@ -194,19 +207,16 @@
 
     /* ── Article card ── */
     .card {
-      background: #fff;
+      background: var(--white);
       border: 1px solid var(--border);
       border-radius: var(--card-r);
-      padding: 1.1rem 1.25rem 0.9rem;
+      padding: 1.1rem 1.2rem 0.9rem;
       display: flex;
       flex-direction: column;
       gap: 0.6rem;
-      transition: box-shadow 0.15s, transform 0.15s, opacity 0.3s;
+      transition: box-shadow 0.15s;
     }
-    .card:hover {
-      box-shadow: 0 4px 18px rgba(0,48,78,0.1);
-      transform: translateY(-2px);
-    }
+    .card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.1); }
     .card.read {
       opacity: 0;
       pointer-events: none;
@@ -224,154 +234,170 @@
       gap: 0.5rem;
     }
     .source-badge {
-      font-size: 0.68rem;
-      font-weight: 600;
-      letter-spacing: 0.04em;
+      font-size: 0.67rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
-      color: var(--accent);
-      background: #EBF5FF;
-      border-radius: 4px;
-      padding: 0.18rem 0.45rem;
+      color: var(--gray-1);
       white-space: nowrap;
       max-width: 160px;
       overflow: hidden;
       text-overflow: ellipsis;
-      flex-shrink: 0;
     }
     .score-dot {
-      width: 8px; height: 8px;
+      width: 7px; height: 7px;
       border-radius: 50%;
       flex-shrink: 0;
       margin-top: 5px;
     }
-    .score-dot.high   { background: #22C55E; }
-    .score-dot.medium { background: #F59E0B; }
+    .score-dot.high   { background: #12B76A; }
+    .score-dot.medium { background: #F79009; }
 
-    .card h3 {
-      font-size: 0.93rem;
-      font-weight: 600;
-      line-height: 1.4;
-    }
+    .card h3 { font-size: 0.92rem; font-weight: 600; line-height: 1.45; }
     .card h3 a { color: var(--text); text-decoration: none; }
-    .card h3 a:hover { color: var(--accent); text-decoration: underline; }
+    .card h3 a:hover { color: var(--adobe-red); }
 
-    .abstract { font-size: 0.83rem; color: var(--muted); flex: 1; line-height: 1.5; }
+    .abstract { font-size: 0.82rem; color: var(--text-muted); flex: 1; line-height: 1.55; }
 
     .card-footer {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-top: 1px solid var(--border);
+      border-top: 1px solid var(--gray-4);
       padding-top: 0.55rem;
       gap: 0.5rem;
       flex-wrap: wrap;
     }
-    .card-date { font-size: 0.72rem; color: #93A3B3; }
+    .card-date { font-size: 0.7rem; color: var(--gray-3); }
+    .card-actions { display: flex; gap: 0.35rem; }
 
-    .card-actions { display: flex; gap: 0.4rem; }
     .btn-read, .btn-keep {
       border: 1px solid var(--border);
-      border-radius: 5px;
+      border-radius: 3px;
       cursor: pointer;
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       font-weight: 600;
-      padding: 0.2rem 0.55rem;
-      transition: background 0.12s, color 0.12s;
+      padding: 0.22rem 0.6rem;
+      transition: background 0.12s, color 0.12s, border-color 0.12s;
     }
-    .btn-read  { background: #fff; color: var(--muted); }
-    .btn-read:hover  { background: var(--light); color: var(--text); }
-    .btn-keep  { background: #fff; color: var(--green); border-color: #BBF0D0; }
-    .btn-keep:hover  { background: #F0FAF4; }
-    .btn-keep.kept   { background: #16A34A; color: #fff; border-color: #16A34A; }
+    .btn-read { background: var(--white); color: var(--gray-2); }
+    .btn-read:hover { background: var(--gray-5); color: var(--text); }
+    .btn-keep { background: var(--white); color: var(--gray-2); }
+    .btn-keep:hover { background: var(--gray-5); border-color: var(--gray-3); color: var(--text); }
+    .btn-keep.kept {
+      background: var(--adobe-red);
+      color: var(--white);
+      border-color: var(--adobe-red);
+    }
 
     /* ── Empty state ── */
     .empty-state {
       text-align: center;
       padding: 3rem 1rem;
-      color: var(--muted);
+      color: var(--text-muted);
     }
-    .empty-state h3 { font-size: 1.1rem; margin-bottom: 0.4rem; }
+    .empty-state h3 { font-size: 1rem; margin-bottom: 0.35rem; }
 
     /* ── Archive tab ── */
     .archive-intro {
-      font-size: 0.88rem;
-      color: var(--muted);
+      font-size: 0.86rem;
+      color: var(--text-muted);
       margin-bottom: 1.5rem;
       padding: 0.75rem 1rem;
-      background: #fff;
+      background: var(--white);
       border: 1px solid var(--border);
       border-radius: var(--card-r);
     }
-    #archive-grid { }
     .archive-card {
-      background: #fff;
+      background: var(--white);
       border: 1px solid var(--border);
       border-radius: var(--card-r);
-      padding: 1rem 1.25rem;
+      padding: 1rem 1.2rem;
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
     }
     .archive-card .arc-customer {
-      font-size: 0.7rem;
+      font-size: 0.67rem;
       font-weight: 700;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: var(--accent);
+      color: var(--adobe-red);
     }
-    .archive-card h3 { font-size: 0.93rem; font-weight: 600; }
+    .archive-card h3 { font-size: 0.92rem; font-weight: 600; }
     .archive-card h3 a { color: var(--text); text-decoration: none; }
-    .archive-card h3 a:hover { color: var(--accent); text-decoration: underline; }
-    .archive-card .arc-abstract { font-size: 0.82rem; color: var(--muted); }
+    .archive-card h3 a:hover { color: var(--adobe-red); }
+    .archive-card .arc-abstract { font-size: 0.82rem; color: var(--text-muted); }
     .archive-card .arc-footer {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 0.72rem;
-      color: #93A3B3;
-      border-top: 1px solid var(--border);
+      font-size: 0.7rem;
+      color: var(--gray-3);
+      border-top: 1px solid var(--gray-4);
       padding-top: 0.5rem;
     }
     .btn-unkeep {
       background: none;
       border: 1px solid var(--border);
-      border-radius: 5px;
+      border-radius: 3px;
       cursor: pointer;
-      font-size: 0.72rem;
-      color: var(--muted);
+      font-size: 0.7rem;
+      color: var(--gray-2);
       padding: 0.15rem 0.45rem;
     }
-    .btn-unkeep:hover { border-color: #f87171; color: #ef4444; }
+    .btn-unkeep:hover { border-color: var(--adobe-red); color: var(--adobe-red); }
+
+    /* ── Divider between customers ── */
+    .customer-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0 0 2.25rem;
+    }
 
     /* ── Responsive ── */
     @media (max-width: 640px) {
-      header h1 { font-size: 1.5rem; }
+      header { flex-wrap: wrap; gap: 1rem; padding: 1.5rem 1rem 1.25rem; }
+      .header-meta { text-align: left; }
       .article-grid { grid-template-columns: 1fr; }
-      .tabs { padding: 0 0.75rem; }
+      .page { padding: 1.5rem 1rem 4rem; }
+      .tabs { padding: 0 1rem; }
     }
   </style>
 </head>
 <body>
 
+<!-- ── Header ── -->
 <header>
-  <p class="eyebrow">AI-curated · Technical Account Manager Intelligence</p>
-  <h1>DX <span>Digest</span></h1>
-  <p class="sub">Weekly news briefing by customer — Nordic FSI focus</p>
+  <div class="adobe-logo">
+    <!-- Adobe "A" logomark in SVG -->
+    <svg width="44" height="38" viewBox="0 0 44 38" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Adobe">
+      <path d="M27.319 0H44V38L27.319 0Z" fill="#FA0F00"/>
+      <path d="M16.681 0H0V38L16.681 0Z" fill="#FA0F00"/>
+      <path d="M22 13.931L32.86 38H25.977L22.984 30.733H15.474L22 13.931Z" fill="#FA0F00"/>
+    </svg>
+  </div>
+  <div class="header-text">
+    <div class="product-name">DX Digest</div>
+    <div class="product-sub">TAM Intelligence Dashboard &middot; Nordic FSI focus</div>
+  </div>
+  <div class="header-meta">
+    <div class="week">{{ week_label }}</div>
+    <div>Updated {{ generated_at }}</div>
+    <div>{{ total_articles }} articles &middot; {{ customers | length }} customers</div>
+  </div>
 </header>
 
-<div class="meta-bar">
-  <span>{{ week_label }}</span>
-  <span>Updated {{ generated_at }} · {{ total_articles }} articles across {{ customers | length }} customers</span>
-</div>
-
-<!-- Tab bar -->
-<div class="tabs">
-  <button class="tab-btn active" onclick="switchTab('digest', this)">
-    This Week <span class="tab-badge">{{ total_articles }}</span>
-  </button>
-  <button class="tab-btn" onclick="switchTab('archive', this)">
-    Archive <span class="tab-badge" id="archive-count">0</span>
-  </button>
+<!-- ── Tabs ── -->
+<div class="tabs-wrap">
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('digest', this)">
+      This Week <span class="tab-badge">{{ total_articles }}</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('archive', this)">
+      Archive <span class="tab-badge" id="archive-count">0</span>
+    </button>
+  </div>
 </div>
 
 <!-- ══ DIGEST TAB ══════════════════════════════════════════════════════════ -->
@@ -386,8 +412,12 @@
   {% endif %}
 
   {% for customer in customers %}
+
+  {% if not loop.first %}<hr class="customer-divider">{% endif %}
+
   <div class="customer-section" id="customer-{{ loop.index }}">
     <div class="customer-header" onclick="toggleCustomer({{ loop.index }})">
+      <div class="cust-mark"></div>
       <h2>{{ customer.name }}</h2>
       <span class="industry-tag">{{ customer.industry }}</span>
       <span class="article-count" id="count-{{ loop.index }}">{{ customer.articles | length }} articles</span>
@@ -421,8 +451,7 @@
             <span class="card-date">{{ a.published[:10] if a.published else "" }}</span>
             <div class="card-actions">
               <button class="btn-read" onclick="markRead('{{ a.id }}')">Mark read</button>
-              <button class="btn-keep" id="keep-{{ a.id }}"
-                onclick="toggleKeep('{{ a.id }}')">Keep</button>
+              <button class="btn-keep" id="keep-{{ a.id }}" onclick="toggleKeep('{{ a.id }}')">Keep</button>
             </div>
           </div>
         </div>
@@ -430,8 +459,8 @@
       </div>
       {% else %}
       <div class="empty-state">
-        <h3>No relevant articles found</h3>
-        <p>Nothing met the relevance threshold this week.</p>
+        <h3>No relevant articles this week</h3>
+        <p>Nothing met the relevance threshold.</p>
       </div>
       {% endif %}
 
@@ -455,7 +484,7 @@
 
   <p class="archive-intro">
     Articles you've marked <strong>Keep</strong> are saved here permanently and survive the weekly refresh.
-    Remove an article to delete it from the archive.
+    Click <strong>Remove</strong> to delete from the archive.
   </p>
 
   <div class="article-grid" id="archive-grid"></div>
@@ -484,13 +513,12 @@ function toggleCustomer(idx) {
 }
 
 // ── localStorage helpers ───────────────────────────────────────────────────
-const LS_READ   = 'dxd_read_';
-const LS_KEPT   = 'dxd_kept_';
+const LS_READ = 'dxd_read_';
+const LS_KEPT = 'dxd_kept_';
 
 function isRead(id)  { return localStorage.getItem(LS_READ + id) === '1'; }
 function isKept(id)  { return !!getKept(id); }
 function getKept(id) { try { return JSON.parse(localStorage.getItem(LS_KEPT + id)); } catch(e) { return null; } }
-
 function setRead(id)    { localStorage.setItem(LS_READ + id, '1'); }
 function setKept(id, d) { localStorage.setItem(LS_KEPT + id, JSON.stringify(d)); }
 function removeKept(id) { localStorage.removeItem(LS_KEPT + id); }
@@ -506,12 +534,22 @@ function allKeptItems() {
   return items;
 }
 
-// ── Apply saved states on load ─────────────────────────────────────────────
+// ── Apply saved state on load ──────────────────────────────────────────────
 function applyState() {
   document.querySelectorAll('.card[data-id]').forEach(card => {
     const id = card.dataset.id;
-    if (isRead(id))  { card.classList.add('read'); }
-    if (isKept(id))  { const kb = document.getElementById('keep-' + id); if (kb) kb.classList.add('kept'); kb.textContent = 'Kept ✓'; }
+    if (isRead(id)) {
+      card.style.maxHeight = '0';
+      card.style.padding = '0';
+      card.style.margin = '0';
+      card.style.border = 'none';
+      card.style.overflow = 'hidden';
+      card.style.opacity = '0';
+    }
+    if (isKept(id)) {
+      const kb = document.getElementById('keep-' + id);
+      if (kb) { kb.classList.add('kept'); kb.textContent = 'Kept ✓'; }
+    }
   });
   updateArchiveCount();
 }
@@ -521,15 +559,16 @@ function markRead(id) {
   setRead(id);
   const card = document.getElementById('card-' + id);
   if (card) {
-    card.style.transition = 'opacity 0.3s, max-height 0.4s 0.3s, padding 0.4s 0.3s, margin 0.4s 0.3s';
+    card.style.transition = 'opacity 0.25s';
     card.style.opacity = '0';
     setTimeout(() => {
+      card.style.transition = 'max-height 0.3s, padding 0.3s, margin 0.3s';
       card.style.maxHeight = '0';
       card.style.padding = '0';
       card.style.margin = '0';
       card.style.border = 'none';
       card.style.overflow = 'hidden';
-    }, 300);
+    }, 250);
   }
 }
 
@@ -550,24 +589,21 @@ function toggleKeep(id) {
   updateArchiveCount();
 }
 
-// ── Archive count badge ────────────────────────────────────────────────────
+// ── Archive count ──────────────────────────────────────────────────────────
 function updateArchiveCount() {
   const n = allKeptItems().length;
   const badge = document.getElementById('archive-count');
   if (badge) badge.textContent = n;
 }
 
-// ── Render archive tab ─────────────────────────────────────────────────────
+// ── Render archive ─────────────────────────────────────────────────────────
 function renderArchive() {
   const grid = document.getElementById('archive-grid');
   const empty = document.getElementById('archive-empty');
   const items = allKeptItems().sort((a, b) => (b.keptAt || '').localeCompare(a.keptAt || ''));
 
   grid.innerHTML = '';
-  if (items.length === 0) {
-    empty.style.display = '';
-    return;
-  }
+  if (items.length === 0) { empty.style.display = ''; return; }
   empty.style.display = 'none';
 
   items.forEach(item => {
@@ -588,7 +624,6 @@ function renderArchive() {
 
 function unkeepFromArchive(id) {
   removeKept(id);
-  // also un-highlight Keep button on digest tab if present
   const btn = document.getElementById('keep-' + id);
   if (btn) { btn.classList.remove('kept'); btn.textContent = 'Keep'; }
   updateArchiveCount();
@@ -599,14 +634,13 @@ function escHtml(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-// ── Article data lookup (populated from template) ─────────────────────────
+// ── Article data (for Keep records) ───────────────────────────────────────
 const ARTICLES = {
   {% for customer in customers %}{% for a in customer.articles %}
   "{{ a.id }}": { id:"{{ a.id }}", customer:{{ customer.name | tojson }}, title:{{ a.title | tojson }}, url:{{ a.url | tojson }}, source:{{ a.source | tojson }}, abstract:{{ a.abstract | tojson }}, published:{{ (a.published or '') | tojson }}, score:{{ a.score }} },
   {% endfor %}{% endfor %}
 };
 
-// ── Init ───────────────────────────────────────────────────────────────────
 applyState();
 </script>
 </body>
