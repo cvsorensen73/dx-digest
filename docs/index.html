@@ -3,90 +3,103 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DX Digest · TAM Intelligence Dashboard</title>
+  <title>DX Digest · TAM Intelligence</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --navy:    #00304E;
-      --blue:    #005F9E;
-      --accent:  #0080C9;
-      --light:   #F0F5FA;
-      --border:  #D8E4EE;
-      --text:    #1A2634;
-      --muted:   #637080;
-      --green:   #16A34A;
-      --amber:   #D97706;
-      --card-r:  10px;
+      /* Adobe brand palette */
+      --adobe-red:   #FA0F00;
+      --dark-1:      #1B1B1B;
+      --dark-2:      #2C2C2C;
+      --dark-3:      #3D3D3D;
+      --gray-1:      #505050;
+      --gray-2:      #6E6E6E;
+      --gray-3:      #B3B3B3;
+      --gray-4:      #EAEAEA;
+      --gray-5:      #F5F5F5;
+      --white:       #FFFFFF;
+      --text:        #1B1B1B;
+      --text-muted:  #6E6E6E;
+      --border:      #E1E1E1;
+      --card-r:      6px;
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: var(--light);
+      font-family: "Adobe Clean", adobe-clean, "Source Sans Pro", -apple-system, BlinkMacSystemFont,
+                   "Segoe UI", Roboto, sans-serif;
+      background: var(--gray-5);
       color: var(--text);
       line-height: 1.6;
     }
 
     /* ── Header ── */
     header {
-      background: var(--navy);
-      color: #fff;
-      padding: 2rem 1.5rem 1.5rem;
-      text-align: center;
-    }
-    header .eyebrow {
-      font-size: 0.72rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      opacity: 0.55;
-      margin-bottom: 0.4rem;
-    }
-    header h1 { font-size: 1.9rem; font-weight: 700; letter-spacing: -0.02em; }
-    header h1 span { color: #5BB8FF; }
-    header .sub { margin-top: 0.35rem; font-size: 0.85rem; opacity: 0.65; }
-
-    .meta-bar {
-      background: var(--blue);
-      color: rgba(255,255,255,0.85);
-      font-size: 0.8rem;
-      padding: 0.45rem 1.5rem;
+      background: var(--dark-1);
+      color: var(--white);
+      padding: 2rem 2rem 1.75rem;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
-      gap: 0.4rem;
+      gap: 1.5rem;
     }
+    .adobe-logo {
+      flex-shrink: 0;
+    }
+    .adobe-logo svg { display: block; }
+    .header-text { flex: 1; }
+    .header-text .product-name {
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      color: var(--white);
+      line-height: 1.2;
+    }
+    .header-text .product-sub {
+      font-size: 0.8rem;
+      color: var(--gray-3);
+      margin-top: 0.2rem;
+    }
+    .header-meta {
+      text-align: right;
+      font-size: 0.78rem;
+      color: var(--gray-3);
+      line-height: 1.5;
+    }
+    .header-meta .week { font-weight: 600; color: var(--white); }
 
     /* ── Tabs ── */
+    .tabs-wrap {
+      background: var(--dark-2);
+      border-bottom: 1px solid var(--dark-3);
+    }
     .tabs {
-      background: #fff;
-      border-bottom: 2px solid var(--border);
-      display: flex;
-      padding: 0 1.5rem;
       max-width: 1200px;
       margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
     }
     .tab-btn {
       background: none;
       border: none;
-      border-bottom: 3px solid transparent;
+      border-bottom: 2px solid transparent;
       cursor: pointer;
-      font-size: 0.9rem;
+      font-size: 0.83rem;
       font-weight: 600;
-      color: var(--muted);
-      padding: 0.85rem 1.25rem;
-      margin-bottom: -2px;
+      color: var(--gray-3);
+      padding: 0.85rem 1rem;
+      margin-bottom: -1px;
+      letter-spacing: 0.01em;
       transition: color 0.15s, border-color 0.15s;
     }
-    .tab-btn:hover { color: var(--text); }
-    .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+    .tab-btn:hover { color: var(--white); }
+    .tab-btn.active { color: var(--white); border-bottom-color: var(--adobe-red); }
     .tab-badge {
-      background: var(--accent);
-      color: #fff;
+      background: var(--adobe-red);
+      color: var(--white);
       border-radius: 10px;
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       font-weight: 700;
-      padding: 0.1rem 0.45rem;
+      padding: 0.1rem 0.42rem;
       margin-left: 0.35rem;
     }
 
@@ -94,36 +107,35 @@
     .tab-panel { display: none; }
     .tab-panel.active { display: block; }
 
-    /* ── Layout ── */
+    /* ── Page layout ── */
     .page {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 2rem 1.5rem 5rem;
+      padding: 2rem 2rem 5rem;
     }
 
     /* ── Summary box ── */
     .summary-box {
-      background: #fff;
+      background: var(--white);
       border: 1px solid var(--border);
-      border-left: 4px solid var(--accent);
+      border-top: 3px solid var(--adobe-red);
       border-radius: var(--card-r);
       padding: 1.25rem 1.5rem;
       margin-bottom: 2.5rem;
     }
     .summary-box .label {
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       font-weight: 700;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--accent);
+      color: var(--adobe-red);
       margin-bottom: 0.5rem;
     }
-    .summary-box p { font-size: 0.95rem; color: var(--text); line-height: 1.65; }
+    .summary-box p { font-size: 0.93rem; color: var(--text); line-height: 1.7; }
 
     /* ── Customer section ── */
-    .customer-section {
-      margin-bottom: 2.5rem;
-    }
+    .customer-section { margin-bottom: 2.25rem; }
+
     .customer-header {
       display: flex;
       align-items: center;
@@ -132,58 +144,59 @@
       cursor: pointer;
       user-select: none;
     }
+    .customer-header .cust-mark {
+      width: 3px;
+      height: 1.4rem;
+      background: var(--adobe-red);
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
     .customer-header h2 {
-      font-size: 1.15rem;
+      font-size: 1.1rem;
       font-weight: 700;
-      color: var(--navy);
+      color: var(--dark-1);
       flex: 1;
+      letter-spacing: -0.01em;
     }
-    .customer-header .industry-tag {
-      font-size: 0.72rem;
+    .industry-tag {
+      font-size: 0.7rem;
       font-weight: 600;
-      color: var(--muted);
-      background: var(--light);
+      color: var(--gray-2);
+      background: var(--gray-5);
       border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 0.2rem 0.6rem;
+      border-radius: 3px;
+      padding: 0.18rem 0.55rem;
+      letter-spacing: 0.02em;
     }
-    .customer-header .article-count {
-      font-size: 0.75rem;
-      color: var(--muted);
-      white-space: nowrap;
-    }
-    .customer-header .chevron {
-      color: var(--muted);
-      font-size: 0.85rem;
-      transition: transform 0.2s;
-    }
+    .article-count { font-size: 0.75rem; color: var(--gray-3); white-space: nowrap; }
+    .chevron { color: var(--gray-3); font-size: 0.8rem; transition: transform 0.2s; }
     .customer-section.collapsed .chevron { transform: rotate(-90deg); }
-    .customer-body { }
     .customer-section.collapsed .customer-body { display: none; }
 
     /* ── Actions panel ── */
     .actions-panel {
-      background: #F0FAF4;
-      border: 1px solid #BBF0D0;
+      background: #FFF8F7;
+      border: 1px solid #FDD5D3;
+      border-left: 3px solid var(--adobe-red);
       border-radius: var(--card-r);
       padding: 1rem 1.25rem;
       margin-bottom: 1.25rem;
     }
     .actions-panel .actions-label {
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       font-weight: 700;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--green);
+      color: var(--adobe-red);
       margin-bottom: 0.6rem;
     }
     .actions-panel ol {
-      padding-left: 1.25rem;
+      padding-left: 1.2rem;
       display: flex;
       flex-direction: column;
       gap: 0.4rem;
     }
-    .actions-panel li { font-size: 0.88rem; color: #1A3A2A; line-height: 1.5; }
+    .actions-panel li { font-size: 0.87rem; color: #3D1A18; line-height: 1.55; }
 
     /* ── Article grid ── */
     .article-grid {
@@ -194,19 +207,16 @@
 
     /* ── Article card ── */
     .card {
-      background: #fff;
+      background: var(--white);
       border: 1px solid var(--border);
       border-radius: var(--card-r);
-      padding: 1.1rem 1.25rem 0.9rem;
+      padding: 1.1rem 1.2rem 0.9rem;
       display: flex;
       flex-direction: column;
       gap: 0.6rem;
-      transition: box-shadow 0.15s, transform 0.15s, opacity 0.3s;
+      transition: box-shadow 0.15s;
     }
-    .card:hover {
-      box-shadow: 0 4px 18px rgba(0,48,78,0.1);
-      transform: translateY(-2px);
-    }
+    .card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.1); }
     .card.read {
       opacity: 0;
       pointer-events: none;
@@ -224,154 +234,170 @@
       gap: 0.5rem;
     }
     .source-badge {
-      font-size: 0.68rem;
-      font-weight: 600;
-      letter-spacing: 0.04em;
+      font-size: 0.67rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
-      color: var(--accent);
-      background: #EBF5FF;
-      border-radius: 4px;
-      padding: 0.18rem 0.45rem;
+      color: var(--gray-1);
       white-space: nowrap;
       max-width: 160px;
       overflow: hidden;
       text-overflow: ellipsis;
-      flex-shrink: 0;
     }
     .score-dot {
-      width: 8px; height: 8px;
+      width: 7px; height: 7px;
       border-radius: 50%;
       flex-shrink: 0;
       margin-top: 5px;
     }
-    .score-dot.high   { background: #22C55E; }
-    .score-dot.medium { background: #F59E0B; }
+    .score-dot.high   { background: #12B76A; }
+    .score-dot.medium { background: #F79009; }
 
-    .card h3 {
-      font-size: 0.93rem;
-      font-weight: 600;
-      line-height: 1.4;
-    }
+    .card h3 { font-size: 0.92rem; font-weight: 600; line-height: 1.45; }
     .card h3 a { color: var(--text); text-decoration: none; }
-    .card h3 a:hover { color: var(--accent); text-decoration: underline; }
+    .card h3 a:hover { color: var(--adobe-red); }
 
-    .abstract { font-size: 0.83rem; color: var(--muted); flex: 1; line-height: 1.5; }
+    .abstract { font-size: 0.82rem; color: var(--text-muted); flex: 1; line-height: 1.55; }
 
     .card-footer {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-top: 1px solid var(--border);
+      border-top: 1px solid var(--gray-4);
       padding-top: 0.55rem;
       gap: 0.5rem;
       flex-wrap: wrap;
     }
-    .card-date { font-size: 0.72rem; color: #93A3B3; }
+    .card-date { font-size: 0.7rem; color: var(--gray-3); }
+    .card-actions { display: flex; gap: 0.35rem; }
 
-    .card-actions { display: flex; gap: 0.4rem; }
     .btn-read, .btn-keep {
       border: 1px solid var(--border);
-      border-radius: 5px;
+      border-radius: 3px;
       cursor: pointer;
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       font-weight: 600;
-      padding: 0.2rem 0.55rem;
-      transition: background 0.12s, color 0.12s;
+      padding: 0.22rem 0.6rem;
+      transition: background 0.12s, color 0.12s, border-color 0.12s;
     }
-    .btn-read  { background: #fff; color: var(--muted); }
-    .btn-read:hover  { background: var(--light); color: var(--text); }
-    .btn-keep  { background: #fff; color: var(--green); border-color: #BBF0D0; }
-    .btn-keep:hover  { background: #F0FAF4; }
-    .btn-keep.kept   { background: #16A34A; color: #fff; border-color: #16A34A; }
+    .btn-read { background: var(--white); color: var(--gray-2); }
+    .btn-read:hover { background: var(--gray-5); color: var(--text); }
+    .btn-keep { background: var(--white); color: var(--gray-2); }
+    .btn-keep:hover { background: var(--gray-5); border-color: var(--gray-3); color: var(--text); }
+    .btn-keep.kept {
+      background: var(--adobe-red);
+      color: var(--white);
+      border-color: var(--adobe-red);
+    }
 
     /* ── Empty state ── */
     .empty-state {
       text-align: center;
       padding: 3rem 1rem;
-      color: var(--muted);
+      color: var(--text-muted);
     }
-    .empty-state h3 { font-size: 1.1rem; margin-bottom: 0.4rem; }
+    .empty-state h3 { font-size: 1rem; margin-bottom: 0.35rem; }
 
     /* ── Archive tab ── */
     .archive-intro {
-      font-size: 0.88rem;
-      color: var(--muted);
+      font-size: 0.86rem;
+      color: var(--text-muted);
       margin-bottom: 1.5rem;
       padding: 0.75rem 1rem;
-      background: #fff;
+      background: var(--white);
       border: 1px solid var(--border);
       border-radius: var(--card-r);
     }
-    #archive-grid { }
     .archive-card {
-      background: #fff;
+      background: var(--white);
       border: 1px solid var(--border);
       border-radius: var(--card-r);
-      padding: 1rem 1.25rem;
+      padding: 1rem 1.2rem;
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
     }
     .archive-card .arc-customer {
-      font-size: 0.7rem;
+      font-size: 0.67rem;
       font-weight: 700;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: var(--accent);
+      color: var(--adobe-red);
     }
-    .archive-card h3 { font-size: 0.93rem; font-weight: 600; }
+    .archive-card h3 { font-size: 0.92rem; font-weight: 600; }
     .archive-card h3 a { color: var(--text); text-decoration: none; }
-    .archive-card h3 a:hover { color: var(--accent); text-decoration: underline; }
-    .archive-card .arc-abstract { font-size: 0.82rem; color: var(--muted); }
+    .archive-card h3 a:hover { color: var(--adobe-red); }
+    .archive-card .arc-abstract { font-size: 0.82rem; color: var(--text-muted); }
     .archive-card .arc-footer {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 0.72rem;
-      color: #93A3B3;
-      border-top: 1px solid var(--border);
+      font-size: 0.7rem;
+      color: var(--gray-3);
+      border-top: 1px solid var(--gray-4);
       padding-top: 0.5rem;
     }
     .btn-unkeep {
       background: none;
       border: 1px solid var(--border);
-      border-radius: 5px;
+      border-radius: 3px;
       cursor: pointer;
-      font-size: 0.72rem;
-      color: var(--muted);
+      font-size: 0.7rem;
+      color: var(--gray-2);
       padding: 0.15rem 0.45rem;
     }
-    .btn-unkeep:hover { border-color: #f87171; color: #ef4444; }
+    .btn-unkeep:hover { border-color: var(--adobe-red); color: var(--adobe-red); }
+
+    /* ── Divider between customers ── */
+    .customer-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0 0 2.25rem;
+    }
 
     /* ── Responsive ── */
     @media (max-width: 640px) {
-      header h1 { font-size: 1.5rem; }
+      header { flex-wrap: wrap; gap: 1rem; padding: 1.5rem 1rem 1.25rem; }
+      .header-meta { text-align: left; }
       .article-grid { grid-template-columns: 1fr; }
-      .tabs { padding: 0 0.75rem; }
+      .page { padding: 1.5rem 1rem 4rem; }
+      .tabs { padding: 0 1rem; }
     }
   </style>
 </head>
 <body>
 
+<!-- ── Header ── -->
 <header>
-  <p class="eyebrow">AI-curated · Technical Account Manager Intelligence</p>
-  <h1>DX <span>Digest</span></h1>
-  <p class="sub">Weekly news briefing by customer — Nordic FSI focus</p>
+  <div class="adobe-logo">
+    <!-- Adobe "A" logomark in SVG -->
+    <svg width="44" height="38" viewBox="0 0 44 38" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Adobe">
+      <path d="M27.319 0H44V38L27.319 0Z" fill="#FA0F00"/>
+      <path d="M16.681 0H0V38L16.681 0Z" fill="#FA0F00"/>
+      <path d="M22 13.931L32.86 38H25.977L22.984 30.733H15.474L22 13.931Z" fill="#FA0F00"/>
+    </svg>
+  </div>
+  <div class="header-text">
+    <div class="product-name">DX Digest</div>
+    <div class="product-sub">TAM Intelligence Dashboard &middot; Nordic FSI focus</div>
+  </div>
+  <div class="header-meta">
+    <div class="week">Week 25 · 2026</div>
+    <div>Updated June 15, 2026 — 08:58 UTC</div>
+    <div>24 articles &middot; 2 customers</div>
+  </div>
 </header>
 
-<div class="meta-bar">
-  <span>Week 24 · 2026</span>
-  <span>Updated June 11, 2026 — 07:52 UTC · 24 articles across 2 customers</span>
-</div>
-
-<!-- Tab bar -->
-<div class="tabs">
-  <button class="tab-btn active" onclick="switchTab('digest', this)">
-    This Week <span class="tab-badge">24</span>
-  </button>
-  <button class="tab-btn" onclick="switchTab('archive', this)">
-    Archive <span class="tab-badge" id="archive-count">0</span>
-  </button>
+<!-- ── Tabs ── -->
+<div class="tabs-wrap">
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('digest', this)">
+      This Week <span class="tab-badge">24</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('archive', this)">
+      Archive <span class="tab-badge" id="archive-count">0</span>
+    </button>
+  </div>
 </div>
 
 <!-- ══ DIGEST TAB ══════════════════════════════════════════════════════════ -->
@@ -381,13 +407,17 @@
   
   <div class="summary-box">
     <p class="label">This week at a glance</p>
-    <p>Nordic financial services firms are accelerating commitment to cloud and AI as foundational infrastructure, with Danske Bank's multi-year AWS partnership and new AI centre of excellence signaling that these are now board-level, multi-year strategic bets rather than exploratory pilots. The scale and ambition of initiatives like Forward '28 and the Aladdin Wealth implementation suggest that competitive differentiation in retail banking will increasingly depend on execution speed and talent acquisition in AI and cloud engineering. For a TAM advising in this space, the Danske Bank activity underscores a need to align roadmap conversations around long-term platform consolidation, AI-ready data architecture, and wealth tech integration rather than point solutions. The Assa Abloy themes, while from a different sector, reinforce a broader cross-industry trend toward digital transition, sustainability-linked technology investment, and smart infrastructure that is relevant context for financial services clients thinking about operational resilience and ESG-driven technology decisions.</p>
+    <p>Nordic financial services and adjacent enterprise customers are clearly accelerating commitments to cloud and AI as foundational infrastructure, with Danske Bank's multiyear AWS partnership and appointment of a dedicated Head of AI signaling that these are now board-level strategic priorities rather than exploratory initiatives. The emphasis on AI enhancing both colleague productivity and customer experience points to a dual-track value case that TAMs should be prepared to articulate and support across similar retail banking clients in the region. Meanwhile, ASSA ABLOY's Capital Markets Day activity and focus on digital access and smart security solutions suggests that even hardware-oriented enterprise customers in the portfolio are pivoting toward software-defined, connected product strategies, which creates adjacent opportunities around identity, access management, and secure infrastructure. Taken together, the dominant theme is that customers across verticals are moving from digital transformation as aspiration to structured, multi-year execution with named leadership, vendor commitments, and investor-facing narratives, meaning TAMs should be engaging at the strategic program level rather than the individual workload level.</p>
   </div>
   
 
   
+
+  
+
   <div class="customer-section" id="customer-1">
     <div class="customer-header" onclick="toggleCustomer(1)">
+      <div class="cust-mark"></div>
       <h2>Danske Bank</h2>
       <span class="industry-tag">Retail Banking / Personal Finance</span>
       <span class="article-count" id="count-1">12 articles</span>
@@ -400,11 +430,11 @@
         <p class="actions-label">Suggested talking points for your next meeting</p>
         <ol>
           
-          <li>Danske Bank is now investing heavily in Generative AI with a dedicated Chief AI Officer and increased GenAI budgets — we can support you in accelerating time-to-value by helping you identify which AI personalisation use cases in your mobile banking app are most likely to drive measurable uplift in customer engagement and retention within the Forward '28 timeframe.</li>
+          <li>Danske Bank has appointed a Chief AI Officer and a Head of AI while significantly increasing Generative AI investment — we'd welcome a conversation about how our platform can support your GenAI roadmap at scale, particularly around personalised mobile experiences for retail customers aligned with your Forward '28 targets.</li>
           
-          <li>With Nordea named the Nordics and Baltics' best digital bank for 2025, there is a clear competitive benchmark to close — we can facilitate a structured CX benchmarking session comparing your current mobile banking capabilities against Nordea's recognised strengths, helping prioritise the highest-impact features to accelerate in your roadmap.</li>
+          <li>With your AWS cloud migration now underway and the Infosys partnership in execution, the infrastructure foundation is in place — we can show you how peers are using this modernised stack to accelerate AI-driven personalisation features in mobile banking, and discuss what capabilities Danske Bank could unlock in the next 12–18 months.</li>
           
-          <li>Your AWS multi-year cloud agreement and Infosys partnership create a powerful foundation, but the real differentiation will come from how you use that infrastructure to deliver hyper-personalised customer journeys at scale — we can bring you concrete case studies from leading European retail banks on how they are operationalising AI personalisation on cloud-native architectures to reduce churn and increase product cross-sell in mobile channels.</li>
+          <li>Nordea has just been named the Nordics and Baltics' best digital bank for 2025 by Euromoney, raising the competitive bar in your home markets — let's discuss how Danske Bank can leverage its Aladdin Wealth integration and GenAI investments to differentiate on personalised customer experience and close that recognition gap.</li>
           
         </ol>
       </div>
@@ -420,49 +450,12 @@
                   title="Relevance 9/10"></span>
           </div>
           <h3><a href="https://news.google.com/rss/articles/CBMivAFBVV95cUxPTTRreTQ2LXJfenk4WHZ2M21Gc3dZZ0t0dFFGZlU4QTQ1Z3J2bExVeDdDYXJlR20waUZPU3I1UWx0MkZvNFdPYTFaMnppckt0WFZISDdOTTNCWjRyVnZ4TlgwZUdjMW0weEtyYjgzWHBkMUxhMnZWQk1BejFrY1ExUzdZUms4ZnhaZGFMVU1XZTF0MDVXcnFvWDVaajV6ZFlTYmtDR3AxUld4LXcxUDVmdExEcm41cHRsUC1CNQ?oc=5" target="_blank" rel="noopener">Danske Bank Invests in Cloud Technology and Signs a Multiyear Agreement With AWS - Fintech Finance</a></h3>
-          <p class="abstract">Danske Bank has signed a multiyear cloud infrastructure agreement with AWS, signalling a major strategic shift toward cloud-native operations. This investment underpins the bank's Forward '28 strategy and its ambitions to accelerate digital product development and scalability across its Nordic and Baltic markets.</p>
+          <p class="abstract">Danske Bank has signed a multiyear cloud agreement with AWS, signalling a major infrastructure shift to support its digital transformation agenda. This investment underpins the bank's ambition to accelerate innovation, improve scalability, and enhance digital customer experiences across its markets.</p>
           <div class="card-footer">
             <span class="card-date">Wed, 20 Ma</span>
             <div class="card-actions">
               <button class="btn-read" onclick="markRead('753706bafbc1')">Mark read</button>
-              <button class="btn-keep" id="keep-753706bafbc1"
-                onclick="toggleKeep('753706bafbc1')">Keep</button>
-            </div>
-          </div>
-        </div>
-        
-        <div class="card" id="card-b1d39373d1ab" data-id="b1d39373d1ab" data-customer="Danske Bank">
-          <div class="card-top">
-            <span class="source-badge" title=""Danske Bank digital banking technology" - Google News">"Danske Bank digital banking technology" - Google News</span>
-            <span class="score-dot high"
-                  title="Relevance 9/10"></span>
-          </div>
-          <h3><a href="https://news.google.com/rss/articles/CBMijAFBVV95cUxPWnoyWTFFVkFWNHljMmNTclhDLXAwbVhYbDlHVzdhQ2FFZ243Z3RTdHdhcjd1blUtOXFvZG1RREEtVXZqbGJ5bVJRN1NNa1U5eWpwMkh4a2tSRW1SdldKNmdfRXJnOUhBazlERm5SS1drbi12eTF2cWYwYXVjOFAxakU0VDM1OTNyejI3aA?oc=5" target="_blank" rel="noopener">Danske Bank to become the first financial institution in the Nordic region to implement Aladdin Wealth™ into its personal customer investment services - Danske Bank</a></h3>
-          <p class="abstract">Danske Bank is set to become the first financial institution in the Nordic region to implement BlackRock's Aladdin Wealth platform for personal customer investment services. This move positions Danske Bank as a first mover in AI-driven wealth personalisation within the Nordic retail banking landscape.</p>
-          <div class="card-footer">
-            <span class="card-date">Thu, 30 Ja</span>
-            <div class="card-actions">
-              <button class="btn-read" onclick="markRead('b1d39373d1ab')">Mark read</button>
-              <button class="btn-keep" id="keep-b1d39373d1ab"
-                onclick="toggleKeep('b1d39373d1ab')">Keep</button>
-            </div>
-          </div>
-        </div>
-        
-        <div class="card" id="card-b82494e40eb1" data-id="b82494e40eb1" data-customer="Danske Bank">
-          <div class="card-top">
-            <span class="source-badge" title=""Danske Bank strategy innovation" - Google News">"Danske Bank strategy innovation" - Google News</span>
-            <span class="score-dot high"
-                  title="Relevance 9/10"></span>
-          </div>
-          <h3><a href="https://news.google.com/rss/articles/CBMi9gFBVV95cUxObUpGeHNSZmo0d0RLSlZhY2F4bjAxSXJXTEFRLUtKRk9WWHd6RTVkTGZmbUVCT08xUWc0TEN4Q09Id3lEUGJoVmZSTlJib3JOWUEyWTVKOFdEVHJCZ1VBQ1NLcVRDei1nRWZZd3RKZWdxZWNUcVBkX3lmN0lfZkdIY3Y2SkpfZDlBZWN1WUhEMks2blpMejBRWi1aanNlaDl0ZU1BTDRDQU4yc2pIZmUtSWI3ejRqbjY2QzZXNmFMU0NyaXBzeEw4NVJLVEF0cVNxa29BS0daY19EY0R4SkcwVzR6dFVnNUM3aFlDc0hwQXU1VEVtZ0E?oc=5" target="_blank" rel="noopener">Danske Bank appoints AI pioneer to lead new Belfast centre of excellence and drive next-generation banking innovation - Belfast News Letter</a></h3>
-          <p class="abstract">Danske Bank has appointed an AI pioneer to lead a new centre of excellence in Belfast, focused on driving next-generation banking innovation. The appointment reflects the bank's deepening commitment to building in-house AI capabilities as a core pillar of its digital transformation agenda.</p>
-          <div class="card-footer">
-            <span class="card-date">Sat, 10 Ja</span>
-            <div class="card-actions">
-              <button class="btn-read" onclick="markRead('b82494e40eb1')">Mark read</button>
-              <button class="btn-keep" id="keep-b82494e40eb1"
-                onclick="toggleKeep('b82494e40eb1')">Keep</button>
+              <button class="btn-keep" id="keep-753706bafbc1" onclick="toggleKeep('753706bafbc1')">Keep</button>
             </div>
           </div>
         </div>
@@ -474,13 +467,12 @@
                   title="Relevance 9/10"></span>
           </div>
           <h3><a href="https://news.google.com/rss/articles/CBMivwFBVV95cUxNUUl2enJvOHhnY05rYlFIWU54N2h0YkFYb3JvU1JJeFZsT3czRDNXN3FNU2YwNmRtd0RJSTZZYUVBVURpMjlXLTZrakFfRHBaNkJUZzJjQU90VHhBVEdEWXdkR25GQ0tYR1h0aDkwVGswYVJaR1V5eFlVNHRPTi1IX05IeXlKNXl2ZkQxemU1bHNfWk1YZjRDajVzSkNhZmFrdzdvbWpyT0hhR0xRSWNleGNFZmxReEd4Q0NpbHF0RQ?oc=5" target="_blank" rel="noopener">How Danske Bank is Betting Big on AI and Polish Talent to Deliver Forward ’28 - Disruption Banking</a></h3>
-          <p class="abstract">Danske Bank is making significant investments in AI and leveraging Polish tech talent to deliver its Forward '28 strategic plan, which targets digital-first banking experiences. The article explores how the bank is restructuring its technology workforce and innovation model to compete with neobanks and digital challengers.</p>
+          <p class="abstract">Danske Bank is heavily investing in AI capabilities and leveraging Polish tech talent as part of its Forward '28 strategic plan. The article details how the bank is embedding AI across operations and product development to drive competitive differentiation by 2028.</p>
           <div class="card-footer">
             <span class="card-date">Tue, 31 Ma</span>
             <div class="card-actions">
               <button class="btn-read" onclick="markRead('520a3372adc4')">Mark read</button>
-              <button class="btn-keep" id="keep-520a3372adc4"
-                onclick="toggleKeep('520a3372adc4')">Keep</button>
+              <button class="btn-keep" id="keep-520a3372adc4" onclick="toggleKeep('520a3372adc4')">Keep</button>
             </div>
           </div>
         </div>
@@ -492,13 +484,12 @@
                   title="Relevance 9/10"></span>
           </div>
           <h3><a href="https://news.google.com/rss/articles/CBMirwFBVV95cUxOYkRFbVpEMC1xWkVLeHducE96OEdYNkhkLWY4SGNSY2tIVWZyYk03YmhnM0g4VTRZeG13aTR6U1RmbE5PY0RGeTUtdFFuT1BQYXptcUt2UklySW5McmxKSlpQcHNtd3JSLVdZd2E0ZDlVYUJ4Q3Nna3FiTW1acmp6T1ZFTXFueEtabE40czAxWnlUb25iak5TT1RIWWYwZ3Bpc1BzZzRqVW84LTJxQlJ3?oc=5" target="_blank" rel="noopener">Denmark’s Danske Bank enters multi-year cloud partnership with AWS - FinTech Futures</a></h3>
-          <p class="abstract">Danske Bank has entered a multi-year cloud partnership with AWS, migrating core infrastructure to enable faster innovation, improved scalability, and enhanced customer-facing digital services. The deal is a foundational enabler of the bank's digital CX and AI personalisation ambitions across the Nordic and Baltic regions.</p>
+          <p class="abstract">Danske Bank has entered a multi-year cloud partnership with AWS, marking a foundational step in modernising its technology infrastructure. The deal is expected to enable faster product development, improved resilience, and enhanced digital service delivery across its Nordic and Baltic footprint.</p>
           <div class="card-footer">
             <span class="card-date">Wed, 26 Ma</span>
             <div class="card-actions">
               <button class="btn-read" onclick="markRead('e6350a1f267b')">Mark read</button>
-              <button class="btn-keep" id="keep-e6350a1f267b"
-                onclick="toggleKeep('e6350a1f267b')">Keep</button>
+              <button class="btn-keep" id="keep-e6350a1f267b" onclick="toggleKeep('e6350a1f267b')">Keep</button>
             </div>
           </div>
         </div>
@@ -510,13 +501,12 @@
                   title="Relevance 9/10"></span>
           </div>
           <h3><a href="https://news.google.com/rss/articles/CBMinAFBVV95cUxQbEo0azRqTkJUUURIdWNpZGY3dF9sUFV1VU1sV2hHVTdkOVJZQVNrS2RiNHhVaVpqeGJFM2JTd0RCS2tCQ004MTZFeVlNTzZWMG9MemNHNXBDdkdXTW9aaGM0bVRGTGo3OXF4NmVtMzRILXZ0WWlyUHpkSnBQNkxZbmhDcUo4UmVuT0FXcjZFMG1JWGJidGxpXzdSaGE?oc=5" target="_blank" rel="noopener">Danske Bank Appoints Fiona Browne as its First Head of AI - Fintech Finance</a></h3>
-          <p class="abstract">Danske Bank has appointed Fiona Browne as its first-ever Head of AI, a landmark hire that signals the bank is institutionalising artificial intelligence as a strategic function. The role will oversee AI governance, ethics, and deployment across both customer-facing and internal banking operations.</p>
+          <p class="abstract">Danske Bank has appointed Fiona Browne as its first-ever Head of AI, underscoring the bank's strategic prioritisation of artificial intelligence across its operations. This move signals a formalisation of AI governance and acceleration of AI-powered product and customer experience initiatives.</p>
           <div class="card-footer">
             <span class="card-date">Fri, 09 Ja</span>
             <div class="card-actions">
               <button class="btn-read" onclick="markRead('4d26bd3d8104')">Mark read</button>
-              <button class="btn-keep" id="keep-4d26bd3d8104"
-                onclick="toggleKeep('4d26bd3d8104')">Keep</button>
+              <button class="btn-keep" id="keep-4d26bd3d8104" onclick="toggleKeep('4d26bd3d8104')">Keep</button>
             </div>
           </div>
         </div>
@@ -528,13 +518,12 @@
                   title="Relevance 9/10"></span>
           </div>
           <h3><a href="https://news.google.com/rss/articles/CBMiqAFBVV95cUxPdVVkZkdMRlpVTUdaZnNwZXhIQXBwWmw5SHpZMVp3RTE1cEVIOXZSRFdDeXVUR3JRR241ZkN6Uk52QTRaUmk2MDNhc2VHLU51M3FrZkZGMnBzaHJxMWJxNHZMYUxhM3p1WGZCTEJJeFQ0emtwd2ZUemJzdmhLZFY4bGt5TU12UzhGRXJMSGlVZXpWMVZMZFhFYnRLTXdHTFpRSkJKZVlOREs?oc=5" target="_blank" rel="noopener">Interview - Danske Bank: Leveraging AI to enhance colleague and customer experience - Sync NI</a></h3>
-          <p class="abstract">An in-depth interview with Danske Bank leadership explores how the bank is leveraging AI to improve both colleague productivity and customer-facing experiences across its digital channels. The piece offers direct insight into Danske Bank's AI deployment priorities and the tangible outcomes it expects from its investments.</p>
+          <p class="abstract">Danske Bank outlines how it is leveraging AI to improve both colleague productivity and customer experience, with practical applications across its operations. The article provides direct insight into the bank's AI deployment approach and its ambitions for enhancing digital CX.</p>
           <div class="card-footer">
             <span class="card-date">Fri, 31 Oc</span>
             <div class="card-actions">
               <button class="btn-read" onclick="markRead('b00c8030248b')">Mark read</button>
-              <button class="btn-keep" id="keep-b00c8030248b"
-                onclick="toggleKeep('b00c8030248b')">Keep</button>
+              <button class="btn-keep" id="keep-b00c8030248b" onclick="toggleKeep('b00c8030248b')">Keep</button>
             </div>
           </div>
         </div>
@@ -546,49 +535,12 @@
                   title="Relevance 9/10"></span>
           </div>
           <h3><a href="https://news.google.com/rss/articles/CBMijAFBVV95cUxQWV9QV0R0U0hLSjE5WnBMRU5MMEwyQkYyWkxudWhBMDRkRm91UmlOdDZaajY2TFBocE5kTEZmQlRnTE5QQnVpRFJQYm1icmZrRUQ5M2VUOTdZX0hvS0FRVHdldDIyN3BXd3NJLU1ndDNBNHhHT1AwVkg4QmJNZ3g1NC01NThBbGpiSWtvUg?oc=5" target="_blank" rel="noopener">Danske Bank invests in cloud technology and signs a multiyear agreement with AWS - Danske Bank</a></h3>
-          <p class="abstract">Danske Bank's official announcement of its multiyear AWS cloud agreement details the bank's ambition to migrate workloads to the cloud to enhance agility, resilience, and the pace of digital innovation. The investment is described as foundational to delivering the Forward '28 strategy and next-generation mobile banking capabilities.</p>
+          <p class="abstract">Danske Bank has formalised its multi-year cloud agreement with AWS, committing to a major migration of its technology infrastructure to support digital innovation. This deal is central to the bank's strategy to build a more agile, scalable, and customer-centric banking platform.</p>
           <div class="card-footer">
             <span class="card-date">Wed, 20 Ma</span>
             <div class="card-actions">
               <button class="btn-read" onclick="markRead('4c32659378aa')">Mark read</button>
-              <button class="btn-keep" id="keep-4c32659378aa"
-                onclick="toggleKeep('4c32659378aa')">Keep</button>
-            </div>
-          </div>
-        </div>
-        
-        <div class="card" id="card-eb0fefa38cde" data-id="eb0fefa38cde" data-customer="Danske Bank">
-          <div class="card-top">
-            <span class="source-badge" title=""Danske Bank strategy innovation" - Google News">"Danske Bank strategy innovation" - Google News</span>
-            <span class="score-dot high"
-                  title="Relevance 9/10"></span>
-          </div>
-          <h3><a href="https://news.google.com/rss/articles/CBMijAFBVV95cUxQS2dTZG5wMTQwT3hBVjRQa0hrTU9JOHpON2ZlT0wxM1N2NWcwdjlIVnhaNHI1eDJ6eFk5NS1DSXdPT19pYkx4dFlCR3J1WEVvZDhIX0FOb0Rsb3pBcG9wQ2doZ1lBdlJhanRmYm9aZFBfVlRSZ0ZVQkw5ZlFWQkZDOEQ3QlZFZ25aV1FOZQ?oc=5" target="_blank" rel="noopener">Danske Bank to enhance customer experience with new platform - Danske Bank</a></h3>
-          <p class="abstract">Danske Bank has announced plans to enhance customer experience through the deployment of a new technology platform designed to improve personalisation and digital service delivery. The initiative directly aligns with the bank's Forward '28 goals and its commitment to becoming a leader in Nordic digital banking CX.</p>
-          <div class="card-footer">
-            <span class="card-date">Thu, 11 Ja</span>
-            <div class="card-actions">
-              <button class="btn-read" onclick="markRead('eb0fefa38cde')">Mark read</button>
-              <button class="btn-keep" id="keep-eb0fefa38cde"
-                onclick="toggleKeep('eb0fefa38cde')">Keep</button>
-            </div>
-          </div>
-        </div>
-        
-        <div class="card" id="card-4df5efec923a" data-id="4df5efec923a" data-customer="Danske Bank">
-          <div class="card-top">
-            <span class="source-badge" title=""Danske Bank digital banking technology" - Google News">"Danske Bank digital banking technology" - Google News</span>
-            <span class="score-dot high"
-                  title="Relevance 9/10"></span>
-          </div>
-          <h3><a href="https://news.google.com/rss/articles/CBMifEFVX3lxTE01YW5wVnZlZ090QTB5czlvZXRlUVRza0hSM0xVVklwSXBWMElLU1NZTXN4cmZ0bHh3LUhSU3NydEtVdnV0SE5TWl9SdkFoVHhZY09zTWdya1RBLUVCY0F5czlHbUJEMzRPbHkxeTBhckhIWEJ2V2ZYWUlPbXI?oc=5" target="_blank" rel="noopener">Danske Bank further strengthens Generative AI focus with new leadership appointment - Danske Bank</a></h3>
-          <p class="abstract">Danske Bank has further strengthened its Generative AI focus with a new senior leadership appointment, signalling that GenAI is now a board-level strategic priority for the bank. The move reflects Danske Bank's ambition to industrialise Generative AI across both customer experience and internal operations within its Forward '28 timeframe.</p>
-          <div class="card-footer">
-            <span class="card-date">Mon, 16 Ju</span>
-            <div class="card-actions">
-              <button class="btn-read" onclick="markRead('4df5efec923a')">Mark read</button>
-              <button class="btn-keep" id="keep-4df5efec923a"
-                onclick="toggleKeep('4df5efec923a')">Keep</button>
+              <button class="btn-keep" id="keep-4c32659378aa" onclick="toggleKeep('4c32659378aa')">Keep</button>
             </div>
           </div>
         </div>
@@ -600,13 +552,29 @@
                   title="Relevance 9/10"></span>
           </div>
           <h3><a href="https://news.google.com/rss/articles/CBMilwFBVV95cUxOU2llTnFFQUNwaWY3RmkyNTdlbTJ0OUt1NTduY0k3cG0xUXhKbVMxdE5pSV96b0M3N0o2RXI0Q3pYdzJmRFpDTy1lWU1QaDJIWndMS0EwS2ZMSUF6dmMxcnlCUDEzQVgxY0JOWWcyaENVS3Z1UVU3Smg1M0UyVlIzeXRlOThsZGNvRUJ2WE5vWjNCaWNleTFB?oc=5" target="_blank" rel="noopener">Danske Bank migrates infrastructure to cloud with AWS - IBS Intelligence</a></h3>
-          <p class="abstract">Danske Bank is actively migrating its infrastructure to the AWS cloud, a move that will provide the scalable, flexible foundation needed to accelerate digital product development and AI deployment. IBS Intelligence reports that the migration is a critical enabler of the bank's broader digital transformation and mobile banking ambitions.</p>
+          <p class="abstract">Danske Bank has begun migrating its infrastructure to the cloud in partnership with AWS, a foundational move to modernise its technology capabilities. The migration is expected to improve system agility, reduce operational complexity, and enable faster delivery of digital customer experiences.</p>
           <div class="card-footer">
             <span class="card-date">Thu, 21 Ma</span>
             <div class="card-actions">
               <button class="btn-read" onclick="markRead('cd4b632e6525')">Mark read</button>
-              <button class="btn-keep" id="keep-cd4b632e6525"
-                onclick="toggleKeep('cd4b632e6525')">Keep</button>
+              <button class="btn-keep" id="keep-cd4b632e6525" onclick="toggleKeep('cd4b632e6525')">Keep</button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="card" id="card-4df5efec923a" data-id="4df5efec923a" data-customer="Danske Bank">
+          <div class="card-top">
+            <span class="source-badge" title=""Danske Bank digital banking technology" - Google News">"Danske Bank digital banking technology" - Google News</span>
+            <span class="score-dot high"
+                  title="Relevance 9/10"></span>
+          </div>
+          <h3><a href="https://news.google.com/rss/articles/CBMifEFVX3lxTE01YW5wVnZlZ090QTB5czlvZXRlUVRza0hSM0xVVklwSXBWMElLU1NZTXN4cmZ0bHh3LUhSU3NydEtVdnV0SE5TWl9SdkFoVHhZY09zTWdya1RBLUVCY0F5czlHbUJEMzRPbHkxeTBhckhIWEJ2V2ZYWUlPbXI?oc=5" target="_blank" rel="noopener">Danske Bank further strengthens Generative AI focus with new leadership appointment - Danske Bank</a></h3>
+          <p class="abstract">Danske Bank has made a new leadership appointment to strengthen its Generative AI focus, reflecting the bank's intensified commitment to embedding GenAI across its operations. This move signals that GenAI is being treated as a strategic priority with dedicated executive ownership.</p>
+          <div class="card-footer">
+            <span class="card-date">Mon, 16 Ju</span>
+            <div class="card-actions">
+              <button class="btn-read" onclick="markRead('4df5efec923a')">Mark read</button>
+              <button class="btn-keep" id="keep-4df5efec923a" onclick="toggleKeep('4df5efec923a')">Keep</button>
             </div>
           </div>
         </div>
@@ -618,13 +586,63 @@
                   title="Relevance 9/10"></span>
           </div>
           <h3><a href="https://news.google.com/rss/articles/CBMifEFVX3lxTFB1QWtPTWtBdks1MU9rRktZOHZ5ZExWWTNEbFJHM1lHVzBQZkJVWlhPcE5LRk1WNkhmdXhNUUZOT0JsdDN0dXZDdExyVURmb2ljQ3JfY1JYcVRQODU2UFIxdDRsUi1uNHZVMDlKeXhCTDIyTTV1ZXlpUHotdUg?oc=5" target="_blank" rel="noopener">Danske Bank Increases Investments in Generative AI - Danske Bank</a></h3>
-          <p class="abstract">Danske Bank has formally announced an increase in its investments in Generative AI, citing the technology's potential to transform customer interactions, automate operations, and personalise financial services at scale. The announcement reinforces the bank's position as one of the most AI-forward retail banks in the Nordic region.</p>
+          <p class="abstract">Danske Bank has announced increased investments in Generative AI, committing greater resources to explore and scale AI-driven capabilities across the bank. This investment is central to the bank's ambition to lead on AI-powered personalisation and operational efficiency in Nordic banking.</p>
           <div class="card-footer">
             <span class="card-date">Thu, 14 Ma</span>
             <div class="card-actions">
               <button class="btn-read" onclick="markRead('4e0f810af26f')">Mark read</button>
-              <button class="btn-keep" id="keep-4e0f810af26f"
-                onclick="toggleKeep('4e0f810af26f')">Keep</button>
+              <button class="btn-keep" id="keep-4e0f810af26f" onclick="toggleKeep('4e0f810af26f')">Keep</button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="card" id="card-63393f15709a" data-id="63393f15709a" data-customer="Danske Bank">
+          <div class="card-top">
+            <span class="source-badge" title=""Danske Bank strategy innovation" - Google News">"Danske Bank strategy innovation" - Google News</span>
+            <span class="score-dot high"
+                  title="Relevance 9/10"></span>
+          </div>
+          <h3><a href="https://news.google.com/rss/articles/CBMirgFBVV95cUxNU0N1X2VsVFh3djh1TUhjMUVCVFlJOVF5MU4yNC02eUgxV3FGdWM3aXhXSng0TzYzeVc1WkdJdnMzTkhLa3h0bUp3TUlmOUdoRjJwcXl1TWtEek5RMHZUN1BfdF9tajlDYVRtWUtTcVYtbDg5NWRJbnVPaVZDV3haQ3l5Zk96akdDZjYyWTJxbkhOVWl4NVBPemdzRnJ5NGIwN3dZcmp6MVNDTmRUbVE?oc=5" target="_blank" rel="noopener">Danske Bank Names Kasper Tjørntved Davidsen as Chief AI Officer - CDO Magazine</a></h3>
+          <p class="abstract">Danske Bank has appointed Kasper Tjørntved Davidsen as its Chief AI Officer, formalising AI leadership at the C-suite level. This appointment signals that AI strategy and execution will now have dedicated senior ownership, accelerating the bank's AI ambitions across customer and operational domains.</p>
+          <div class="card-footer">
+            <span class="card-date">Tue, 01 Ju</span>
+            <div class="card-actions">
+              <button class="btn-read" onclick="markRead('63393f15709a')">Mark read</button>
+              <button class="btn-keep" id="keep-63393f15709a" onclick="toggleKeep('63393f15709a')">Keep</button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="card" id="card-b1d39373d1ab" data-id="b1d39373d1ab" data-customer="Danske Bank">
+          <div class="card-top">
+            <span class="source-badge" title=""Danske Bank digital banking technology" - Google News">"Danske Bank digital banking technology" - Google News</span>
+            <span class="score-dot high"
+                  title="Relevance 8/10"></span>
+          </div>
+          <h3><a href="https://news.google.com/rss/articles/CBMijAFBVV95cUxPWnoyWTFFVkFWNHljMmNTclhDLXAwbVhYbDlHVzdhQ2FFZ243Z3RTdHdhcjd1blUtOXFvZG1RREEtVXZqbGJ5bVJRN1NNa1U5eWpwMkh4a2tSRW1SdldKNmdfRXJnOUhBazlERm5SS1drbi12eTF2cWYwYXVjOFAxakU0VDM1OTNyejI3aA?oc=5" target="_blank" rel="noopener">Danske Bank to become the first financial institution in the Nordic region to implement Aladdin Wealth™ into its personal customer investment services - Danske Bank</a></h3>
+          <p class="abstract">Danske Bank is set to become the first Nordic financial institution to implement BlackRock's Aladdin Wealth platform into its personal customer investment services. This move reflects the bank's commitment to AI-driven personalisation and advanced portfolio management for retail clients.</p>
+          <div class="card-footer">
+            <span class="card-date">Thu, 30 Ja</span>
+            <div class="card-actions">
+              <button class="btn-read" onclick="markRead('b1d39373d1ab')">Mark read</button>
+              <button class="btn-keep" id="keep-b1d39373d1ab" onclick="toggleKeep('b1d39373d1ab')">Keep</button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="card" id="card-0f212837982e" data-id="0f212837982e" data-customer="Danske Bank">
+          <div class="card-top">
+            <span class="source-badge" title=""Danske Bank digital banking technology" - Google News">"Danske Bank digital banking technology" - Google News</span>
+            <span class="score-dot high"
+                  title="Relevance 8/10"></span>
+          </div>
+          <h3><a href="https://news.google.com/rss/articles/CBMiwgFBVV95cUxPZGdhRzRTWjdKQ0FfamRaM1hKMUU2dVczMHRQTVRySXFqVUdGeFdzN0tqaWN6YWozMGlBN2diTTUwTlVFWEhoTjY2S3RjU2dseHFfTTR4RHNPekJJcEhWcDMxQ01GR1RWSWhqNEFncHNHX2Fsc3JFTmd3Rm5QSDJMdzBNSjRxZU1qT1Bnd0VMb0Nsd1dHa1VvbGhyUjlfN3dxU3c2VDlYeGhkRDlIcU9wcjcwdFZfZE5ydnhKcGthcnhyUQ?oc=5" target="_blank" rel="noopener">Danske Bank appoints two new execs to lead technology and data strategy - FinTech Futures</a></h3>
+          <p class="abstract">Danske Bank has appointed two new executives to lead its technology and data strategy, signalling a governance uplift around its digital and AI initiatives. These leadership changes indicate a sharpening focus on executing the bank's data-driven transformation agenda.</p>
+          <div class="card-footer">
+            <span class="card-date">Wed, 26 Ma</span>
+            <div class="card-actions">
+              <button class="btn-read" onclick="markRead('0f212837982e')">Mark read</button>
+              <button class="btn-keep" id="keep-0f212837982e" onclick="toggleKeep('0f212837982e')">Keep</button>
             </div>
           </div>
         </div>
@@ -635,8 +653,12 @@
     </div>
   </div>
   
+
+  <hr class="customer-divider">
+
   <div class="customer-section" id="customer-2">
     <div class="customer-header" onclick="toggleCustomer(2)">
+      <div class="cust-mark"></div>
       <h2>Assa Abloy</h2>
       <span class="industry-tag">Hardware Manufacturing / Security and Protection Services</span>
       <span class="article-count" id="count-2">12 articles</span>
@@ -649,11 +671,11 @@
         <p class="actions-label">Suggested talking points for your next meeting</p>
         <ol>
           
-          <li>Given ASSA ABLOY's active M&A strategy — with recent acquisitions across the US, Canada, Europe, and Latin America — our Commerce platform can be configured to support rapid onboarding of newly acquired business units, reducing integration time and ensuring consistent digital access management across a fragmented multi-entity structure.</li>
+          <li>Given ASSA ABLOY's aggressive M&A strategy with numerous acquisitions across EMEA, Americas, and APAC, the TAM should discuss how the Commerce platform can support seamless integration of newly acquired business units — proposing a unified digital commerce infrastructure that reduces time-to-revenue for each acquisition and addresses the challenge of independently operating business units.</li>
           
-          <li>With ASSA ABLOY's Capital Markets Day 2025 highlighting digital transformation and sustainability as core strategic pillars, now is an ideal time to discuss how our platform can provide cross-divisional data visibility and reporting that supports both investor-facing ESG metrics and operational efficiency goals across independently operating business units.</li>
+          <li>With ASSA ABLOY's Q1 2026 results showing resilience amid FX headwinds and the Capital Markets Day highlighting growth targets, the TAM should position the Commerce platform as a tool to drive organic growth and improve cross-sell efficiency across business units — demonstrating with concrete ROI metrics how digitizing the sales and ordering experience can offset currency and cost pressures.</li>
           
-          <li>As ASSA ABLOY accelerates the shift from mechanical to digital access — evidenced by its smart keys and energy-harvesting product lines — we should explore how our Commerce platform can help manage the complexity of hybrid product portfolios, ensuring seamless customer journeys whether end users are purchasing legacy hardware or next-generation digital access solutions.</li>
+          <li>As ASSA ABLOY accelerates its transition from mechanical to digital access solutions and doubles down on sustainability as a growth driver, the TAM should explore how the Commerce platform can support differentiated digital product catalogs, configurators, and sustainability reporting — enabling ASSA ABLOY's independent business units to bring smart and green product lines to market faster across their global customer base.</li>
           
         </ol>
       </div>
@@ -662,38 +684,36 @@
       
       <div class="article-grid" id="grid-2">
         
-        <div class="card" id="card-7443f85ad343" data-id="7443f85ad343" data-customer="Assa Abloy">
-          <div class="card-top">
-            <span class="source-badge" title=""Assa Abloy strategy innovation" - Google News">"Assa Abloy strategy innovation" - Google News</span>
-            <span class="score-dot high"
-                  title="Relevance 8/10"></span>
-          </div>
-          <h3><a href="https://news.google.com/rss/articles/CBMipAFBVV95cUxOMzNVUWZ6c3lqRUYxcFRQeHFqZkFLSnkwdk40TWNFaFZ3ajAyeERUS0NXTUFmOVpRTEFKV2Y4aE56dnpBNWxjY0VwTzNWZTMxbTZRcFpUT0JVSDhXbEYwak9uclhoNV9UUEt3VVJRS1VSQkRKbEdWWWtWbE5vWHZOMUhmMFZWNlNaOEppazhzTnJ0OURGQ3lwejJPaTVUdFRPQmFhaQ?oc=5" target="_blank" rel="noopener">Sustainability is a Sixth Wave of Innovation. Energy-harvesting access control puts you ahead of the curve - Assa Abloy</a></h3>
-          <p class="abstract">ASSA ABLOY frames sustainability as a sixth wave of innovation, highlighting energy-harvesting access control as a forward-looking technology that reduces power dependency while maintaining security performance. This positions the company's product roadmap at the intersection of environmental responsibility and cutting-edge access control innovation.</p>
-          <div class="card-footer">
-            <span class="card-date">Mon, 19 Ju</span>
-            <div class="card-actions">
-              <button class="btn-read" onclick="markRead('7443f85ad343')">Mark read</button>
-              <button class="btn-keep" id="keep-7443f85ad343"
-                onclick="toggleKeep('7443f85ad343')">Keep</button>
-            </div>
-          </div>
-        </div>
-        
-        <div class="card" id="card-999810b6d9a9" data-id="999810b6d9a9" data-customer="Assa Abloy">
+        <div class="card" id="card-8b54a5330d77" data-id="8b54a5330d77" data-customer="Assa Abloy">
           <div class="card-top">
             <span class="source-badge" title=""Assa Abloy digital banking technology" - Google News">"Assa Abloy digital banking technology" - Google News</span>
             <span class="score-dot high"
                   title="Relevance 8/10"></span>
           </div>
-          <h3><a href="https://news.google.com/rss/articles/CBMihgFBVV95cUxNdWJWM3F2N3R0SWdMZGZVRkYzeERhei1iSzRhVFUwd2ROZGNLWUpfUGdyMzhwbXpWZ2V3Si1SMXZmUGR1aEI1S3JDRnhLdTdYVlBXaGVFM3ZtV2VPNzcyQ3BTaXBPeUV4NlBzLVpUQTJkWmp3N25RTVNPdWRZUmh3SGdkbVE1dw?oc=5" target="_blank" rel="noopener">Smart keys and cylinders simplify the switch from mechanical to digital access - Assa Abloy</a></h3>
-          <p class="abstract">ASSA ABLOY is promoting smart keys and cylinders as a simplified migration path from mechanical to digital access control, lowering the barrier for end customers to modernize their security infrastructure. This offering is directly relevant to the company's Commerce platform strategy and cross-divisional digital transformation goals.</p>
+          <h3><a href="https://news.google.com/rss/articles/CBMi1gFBVV95cUxQcjVNaGxoWF8wUENsMDJhMGQxSWExdDBESHlmWjZhVXhONGkySVV0QVNvNHZiUkpVcnExYUtMRHNKMGgtejh2Ylkwd1FfaHN6Qk1aNnVUTnNxUS1wMWdleVMxM01zUlVqSEZreXZpdHJRTnVVUDhid0dKS0VxWmRMM2lVekphd3hwMV9pU19EWFpFUmZYOGZEc3J0M3BvckFnTV94ZmxuZnFtLUUxX0xVN2dxdVdzb080RUwyakpMU1VwZ3RpU2QwUzZnVG95ZEFPa0JGNlhB?oc=5" target="_blank" rel="noopener">ASSA ABLOY digital access solutions at Intersec 2026 - SourceSecurity.com</a></h3>
+          <p class="abstract">ASSA ABLOY is showcasing its digital access solutions at Intersec 2026, highlighting the company's ongoing push to bring cutting-edge security technology to global markets. This is directly relevant to understanding ASSA ABLOY's product roadmap and customer engagement strategy in the security and access control space.</p>
           <div class="card-footer">
-            <span class="card-date">Tue, 05 Ma</span>
+            <span class="card-date">Mon, 15 De</span>
             <div class="card-actions">
-              <button class="btn-read" onclick="markRead('999810b6d9a9')">Mark read</button>
-              <button class="btn-keep" id="keep-999810b6d9a9"
-                onclick="toggleKeep('999810b6d9a9')">Keep</button>
+              <button class="btn-read" onclick="markRead('8b54a5330d77')">Mark read</button>
+              <button class="btn-keep" id="keep-8b54a5330d77" onclick="toggleKeep('8b54a5330d77')">Keep</button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="card" id="card-db7aeb891de3" data-id="db7aeb891de3" data-customer="Assa Abloy">
+          <div class="card-top">
+            <span class="source-badge" title=""Assa Abloy strategy innovation" - Google News">"Assa Abloy strategy innovation" - Google News</span>
+            <span class="score-dot high"
+                  title="Relevance 8/10"></span>
+          </div>
+          <h3><a href="https://news.google.com/rss/articles/CBMiwgJBVV95cUxNRnRYU1JuWGRMSFR1SUtBbk1MMmRfbUFBSU52YUxRM2ZYSDRHby02MW53Q3VPdlJPeWJyS1Jfc3lueFFNRGpNa3lXY1BJNlBZekR2aERMTzQyeDlENUFGeW1qUTlmQTVIWENEdkcxWXZsNlp1X1A0VHNnT2V0X2lzU1MyZjFJUnJCUjYtU0hBVThkWFFTbExuY2pqdl9wNndaRUhxT2ExX2ZXQWRqM0RGc3F0d2ZZeWo0bXBoU1VUdFNBUTdXakJVVUpEV2xqNXFOR1dxX09nZ0dBdzhoRGFRa1laOXMzYjlyWGRGNHBfVDBzWE9fdm5JbDluUTU1eDc2Z3NCb0JQUlpDVjJ6cVVzNDUtdFNraTFDSm9nRXROTE8xZjRUOFE2Q3dOeGNEdkZJRVFKZFdlN1dqZmlUWVVQMlZ3?oc=5" target="_blank" rel="noopener">Doors Company Evaluation Report 2025 | ASSA ABLOY, LIXIL, and JELD-WEN Lead with Smart Security, Sustainable Solutions, and Strategic Expansions - ResearchAndMarkets.com - Business Wire</a></h3>
+          <p class="abstract">A 2025 company evaluation report identifies ASSA ABLOY as a leader in the doors and security market, alongside LIXIL and JELD-WEN, with strengths in smart security, sustainability, and strategic expansions. This provides a useful competitive benchmark for ASSA ABLOY's market positioning and strategic priorities.</p>
+          <div class="card-footer">
+            <span class="card-date">Thu, 11 Se</span>
+            <div class="card-actions">
+              <button class="btn-read" onclick="markRead('db7aeb891de3')">Mark read</button>
+              <button class="btn-keep" id="keep-db7aeb891de3" onclick="toggleKeep('db7aeb891de3')">Keep</button>
             </div>
           </div>
         </div>
@@ -705,49 +725,97 @@
                   title="Relevance 8/10"></span>
           </div>
           <h3><a href="https://news.google.com/rss/articles/CBMiiwFBVV95cUxPV3otYlY0bmpjQ3V3MEFFbmV5dURpRGhYdVNxYUtRRFpMdVZsbTJNdDRwYTdGMk9WZl9ndnJSRVNRM09Dc0tiT2o0NXB3WWZPYUdVa3J4ZF9nb3JSS3RNQVo5NFoydkkzREFzelM5Wm85ZXI0RXF2VmRETnRlR09yT0I2VjlGYW0yNUdF?oc=5" target="_blank" rel="noopener">An inspiring and well attended Capital Markets Day 2025 - Assa Abloy</a></h3>
-          <p class="abstract">ASSA ABLOY's Capital Markets Day 2025 drew strong attendance and outlined the company's strategic direction, financial targets, and innovation roadmap for the coming years. The event provides a comprehensive view of how ASSA ABLOY plans to balance organic growth, acquisitions, and digital transformation across its global business units.</p>
+          <p class="abstract">ASSA ABLOY held an inspiring and well-attended Capital Markets Day in 2025, providing investors and analysts with an update on the company's strategic direction, financial targets, and innovation pipeline. This event is a key reference point for understanding ASSA ABLOY's long-term ambitions and investment priorities.</p>
           <div class="card-footer">
             <span class="card-date">Fri, 21 No</span>
             <div class="card-actions">
               <button class="btn-read" onclick="markRead('f6423cb3f20b')">Mark read</button>
-              <button class="btn-keep" id="keep-f6423cb3f20b"
-                onclick="toggleKeep('f6423cb3f20b')">Keep</button>
+              <button class="btn-keep" id="keep-f6423cb3f20b" onclick="toggleKeep('f6423cb3f20b')">Keep</button>
             </div>
           </div>
         </div>
         
-        <div class="card" id="card-8b54a5330d77" data-id="8b54a5330d77" data-customer="Assa Abloy">
+        <div class="card" id="card-ce790cc1d15c" data-id="ce790cc1d15c" data-customer="Assa Abloy">
+          <div class="card-top">
+            <span class="source-badge" title=""Assa Abloy strategy innovation" - Google News">"Assa Abloy strategy innovation" - Google News</span>
+            <span class="score-dot high"
+                  title="Relevance 8/10"></span>
+          </div>
+          <h3><a href="https://news.google.com/rss/articles/CBMihwFBVV95cUxPMi11bGoyUmgyQlQxX0FjY19Jd1hBUmpKY3pYaDNxMmo4MWZPLTl3V2tCQkhLbEs5RVJiSW5Ib2xJaEVyd0JwWm5JWkFTSnV5OER6SVhvZDFqcE1vaUpTTW81M21ZMWZVSFZlcFJoLWhRNm5MWTdyeGZ6ZHliRmtONFZxRmY2Wnc?oc=5" target="_blank" rel="noopener">ASSA ABLOY hosts its Capital Markets Day - Assa Abloy</a></h3>
+          <p class="abstract">ASSA ABLOY hosted its Capital Markets Day, offering a platform to communicate strategic priorities, financial outlook, and product innovation to the investment community. This is a critical event for understanding the company's forward-looking strategy and areas of focus for technology partnerships.</p>
+          <div class="card-footer">
+            <span class="card-date">Wed, 19 No</span>
+            <div class="card-actions">
+              <button class="btn-read" onclick="markRead('ce790cc1d15c')">Mark read</button>
+              <button class="btn-keep" id="keep-ce790cc1d15c" onclick="toggleKeep('ce790cc1d15c')">Keep</button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="card" id="card-35d7aa2cd8c4" data-id="35d7aa2cd8c4" data-customer="Assa Abloy">
+          <div class="card-top">
+            <span class="source-badge" title=""Assa Abloy strategy innovation" - Google News">"Assa Abloy strategy innovation" - Google News</span>
+            <span class="score-dot high"
+                  title="Relevance 8/10"></span>
+          </div>
+          <h3><a href="https://news.google.com/rss/articles/CBMizwFBVV95cUxOUzFkWHJMQ3dmSF9GMUo4RXFPNENMWkJneXN0cm9qbnpSVWxmQzFUTl9lTWZTQkJ5YUdHYnJQeGg4RkZ3elNibmdOODJkX2cxN3lTelBHVGtQSS1SYmRkWjNpWE1DUGdsQ1A2bU01NFNRNkV1Y215Tkx4RWlxVG93dW5LWWhLUHFyRkJVY2xvbUN2eVF5SWZJTnZHenNIaS1aNHFrTlRXLVRjT3FZbE9QNERxNjhxcGFUY2cyRnlYakNLalpJc0F3MjBIN3JoM0U?oc=5" target="_blank" rel="noopener">Earnings call transcript: Assa Abloy Q1 2026 shows resilience amid FX headwinds - Investing.com</a></h3>
+          <p class="abstract">ASSA ABLOY's Q1 2026 earnings call transcript reveals resilience in financial performance despite foreign exchange headwinds, with analysts and investors focused on organic growth and margin trends. This is highly relevant for understanding the company's current financial health and near-term strategic priorities ahead of TAM meetings.</p>
+          <div class="card-footer">
+            <span class="card-date">Tue, 28 Ap</span>
+            <div class="card-actions">
+              <button class="btn-read" onclick="markRead('35d7aa2cd8c4')">Mark read</button>
+              <button class="btn-keep" id="keep-35d7aa2cd8c4" onclick="toggleKeep('35d7aa2cd8c4')">Keep</button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="card" id="card-799c4bd53276" data-id="799c4bd53276" data-customer="Assa Abloy">
           <div class="card-top">
             <span class="source-badge" title=""Assa Abloy digital banking technology" - Google News">"Assa Abloy digital banking technology" - Google News</span>
             <span class="score-dot medium"
                   title="Relevance 7/10"></span>
           </div>
-          <h3><a href="https://news.google.com/rss/articles/CBMi1gFBVV95cUxQcjVNaGxoWF8wUENsMDJhMGQxSWExdDBESHlmWjZhVXhONGkySVV0QVNvNHZiUkpVcnExYUtMRHNKMGgtejh2Ylkwd1FfaHN6Qk1aNnVUTnNxUS1wMWdleVMxM01zUlVqSEZreXZpdHJRTnVVUDhid0dKS0VxWmRMM2lVekphd3hwMV9pU19EWFpFUmZYOGZEc3J0M3BvckFnTV94ZmxuZnFtLUUxX0xVN2dxdVdzb080RUwyakpMU1VwZ3RpU2QwUzZnVG95ZEFPa0JGNlhB?oc=5" target="_blank" rel="noopener">ASSA ABLOY digital access solutions at Intersec 2026 - SourceSecurity.com</a></h3>
-          <p class="abstract">ASSA ABLOY is showcasing its digital access solutions at Intersec 2026, highlighting the company's push into smart security and digital access technology for commercial and institutional markets. This event presence signals ASSA ABLOY's strategic focus on expanding its digital portfolio and global brand visibility in the security sector.</p>
+          <h3><a href="https://news.google.com/rss/articles/CBMivgFBVV95cUxPNWRPbFc4WWdtUF93a1diVDdPd3V6RVpUeFJMUk1rako2RzZtM0I2QXdjbUF0ZWdaYURxR1hqUk8wUFdDTF80RzR6ZkUyUVdLczZXOGg5bW9TeHQzMG1iU0JZLVFMOWVOY0N6Y2cwd1NaTGptV3dCRGotYVFSWGxURmpwcHhDdnpSdWNOQ25uOEV0bkVYOExmY25uNkNEOUtXel82XzJWTGNXamhycW1TWFFEYVA0TGgzNXdMc21B?oc=5" target="_blank" rel="noopener">ASSA ABLOY digital solutions for security specifications - SourceSecurity.com</a></h3>
+          <p class="abstract">ASSA ABLOY is promoting its digital solutions for security specifications, reinforcing its position as a leader in integrated digital access and security systems. This article underscores the company's focus on helping specifiers and architects incorporate digital security into building projects.</p>
           <div class="card-footer">
-            <span class="card-date">Mon, 15 De</span>
+            <span class="card-date">Tue, 19 No</span>
             <div class="card-actions">
-              <button class="btn-read" onclick="markRead('8b54a5330d77')">Mark read</button>
-              <button class="btn-keep" id="keep-8b54a5330d77"
-                onclick="toggleKeep('8b54a5330d77')">Keep</button>
+              <button class="btn-read" onclick="markRead('799c4bd53276')">Mark read</button>
+              <button class="btn-keep" id="keep-799c4bd53276" onclick="toggleKeep('799c4bd53276')">Keep</button>
             </div>
           </div>
         </div>
         
-        <div class="card" id="card-db7aeb891de3" data-id="db7aeb891de3" data-customer="Assa Abloy">
+        <div class="card" id="card-7443f85ad343" data-id="7443f85ad343" data-customer="Assa Abloy">
           <div class="card-top">
             <span class="source-badge" title=""Assa Abloy strategy innovation" - Google News">"Assa Abloy strategy innovation" - Google News</span>
             <span class="score-dot medium"
                   title="Relevance 7/10"></span>
           </div>
-          <h3><a href="https://news.google.com/rss/articles/CBMiwgJBVV95cUxNRnRYU1JuWGRMSFR1SUtBbk1MMmRfbUFBSU52YUxRM2ZYSDRHby02MW53Q3VPdlJPeWJyS1Jfc3lueFFNRGpNa3lXY1BJNlBZekR2aERMTzQyeDlENUFGeW1qUTlmQTVIWENEdkcxWXZsNlp1X1A0VHNnT2V0X2lzU1MyZjFJUnJCUjYtU0hBVThkWFFTbExuY2pqdl9wNndaRUhxT2ExX2ZXQWRqM0RGc3F0d2ZZeWo0bXBoU1VUdFNBUTdXakJVVUpEV2xqNXFOR1dxX09nZ0dBdzhoRGFRa1laOXMzYjlyWGRGNHBfVDBzWE9fdm5JbDluUTU1eDc2Z3NCb0JQUlpDVjJ6cVVzNDUtdFNraTFDSm9nRXROTE8xZjRUOFE2Q3dOeGNEdkZJRVFKZFdlN1dqZmlUWVVQMlZ3?oc=5" target="_blank" rel="noopener">Doors Company Evaluation Report 2025 | ASSA ABLOY, LIXIL, and JELD-WEN Lead with Smart Security, Sustainable Solutions, and Strategic Expansions - ResearchAndMarkets.com - Business Wire</a></h3>
-          <p class="abstract">A 2025 industry evaluation report positions ASSA ABLOY alongside LIXIL and JELD-WEN as leaders in smart security, sustainable solutions, and strategic market expansion in the doors and hardware sector. The report underscores ASSA ABLOY's competitive differentiation through innovation and sustainability commitments across global markets.</p>
+          <h3><a href="https://news.google.com/rss/articles/CBMipAFBVV95cUxOMzNVUWZ6c3lqRUYxcFRQeHFqZkFLSnkwdk40TWNFaFZ3ajAyeERUS0NXTUFmOVpRTEFKV2Y4aE56dnpBNWxjY0VwTzNWZTMxbTZRcFpUT0JVSDhXbEYwak9uclhoNV9UUEt3VVJRS1VSQkRKbEdWWWtWbE5vWHZOMUhmMFZWNlNaOEppazhzTnJ0OURGQ3lwejJPaTVUdFRPQmFhaQ?oc=5" target="_blank" rel="noopener">Sustainability is a Sixth Wave of Innovation. Energy-harvesting access control puts you ahead of the curve - Assa Abloy</a></h3>
+          <p class="abstract">ASSA ABLOY positions sustainability and energy-harvesting access control as a sixth wave of innovation, arguing that environmentally friendly solutions also deliver competitive advantage. This reflects the company's strategy to integrate green technology into its core product offerings.</p>
           <div class="card-footer">
-            <span class="card-date">Thu, 11 Se</span>
+            <span class="card-date">Mon, 19 Ju</span>
             <div class="card-actions">
-              <button class="btn-read" onclick="markRead('db7aeb891de3')">Mark read</button>
-              <button class="btn-keep" id="keep-db7aeb891de3"
-                onclick="toggleKeep('db7aeb891de3')">Keep</button>
+              <button class="btn-read" onclick="markRead('7443f85ad343')">Mark read</button>
+              <button class="btn-keep" id="keep-7443f85ad343" onclick="toggleKeep('7443f85ad343')">Keep</button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="card" id="card-999810b6d9a9" data-id="999810b6d9a9" data-customer="Assa Abloy">
+          <div class="card-top">
+            <span class="source-badge" title=""Assa Abloy digital banking technology" - Google News">"Assa Abloy digital banking technology" - Google News</span>
+            <span class="score-dot medium"
+                  title="Relevance 7/10"></span>
+          </div>
+          <h3><a href="https://news.google.com/rss/articles/CBMihgFBVV95cUxNdWJWM3F2N3R0SWdMZGZVRkYzeERhei1iSzRhVFUwd2ROZGNLWUpfUGdyMzhwbXpWZ2V3Si1SMXZmUGR1aEI1S3JDRnhLdTdYVlBXaGVFM3ZtV2VPNzcyQ3BTaXBPeUV4NlBzLVpUQTJkWmp3N25RTVNPdWRZUmh3SGdkbVE1dw?oc=5" target="_blank" rel="noopener">Smart keys and cylinders simplify the switch from mechanical to digital access - Assa Abloy</a></h3>
+          <p class="abstract">ASSA ABLOY highlights how smart keys and cylinders are enabling a simplified transition from mechanical to digital access control for end users. This product-level insight is relevant to understanding how ASSA ABLOY is addressing the market shift toward digitization in physical security.</p>
+          <div class="card-footer">
+            <span class="card-date">Tue, 05 Ma</span>
+            <div class="card-actions">
+              <button class="btn-read" onclick="markRead('999810b6d9a9')">Mark read</button>
+              <button class="btn-keep" id="keep-999810b6d9a9" onclick="toggleKeep('999810b6d9a9')">Keep</button>
             </div>
           </div>
         </div>
@@ -759,13 +827,29 @@
                   title="Relevance 7/10"></span>
           </div>
           <h3><a href="https://news.google.com/rss/articles/CBMisgFBVV95cUxQVUhCb21YVWhVSTdQcGNNWXFjQzNLRDl2X0tlRjR3dHcwUjUzUjh5VzFYYTA3TGtubWFDNGhuOE90OUtBSnZIWDZtSnhCSWRRWWlYWnBwa3BHMXV4RllXM3ZqekNJcjAweEFRRHBhdk5kOWJodktwb1FYVXRBVGVoTW90dE5iZmd5VFFsb3RKcEo0djlkcm9sZHN3ZmNpc2tQWDcyazZ3NVFZREFuOUptNHd3?oc=5" target="_blank" rel="noopener">Sustainability remains a growth driver for ASSA ABLOY - Assa Abloy</a></h3>
-          <p class="abstract">ASSA ABLOY highlights sustainability as a continued growth driver, integrating environmental performance metrics into its broader business strategy and investor communications. This reflects the company's belief that ESG commitments are not just compliance obligations but genuine levers for revenue growth and market differentiation.</p>
+          <p class="abstract">ASSA ABLOY reports that sustainability continues to be a significant growth driver for the company, influencing both product development and investor relations. This reflects the company's long-term commitment to embedding environmental responsibility into its business strategy.</p>
           <div class="card-footer">
             <span class="card-date">Fri, 27 Ma</span>
             <div class="card-actions">
               <button class="btn-read" onclick="markRead('8d39c5b1051f')">Mark read</button>
-              <button class="btn-keep" id="keep-8d39c5b1051f"
-                onclick="toggleKeep('8d39c5b1051f')">Keep</button>
+              <button class="btn-keep" id="keep-8d39c5b1051f" onclick="toggleKeep('8d39c5b1051f')">Keep</button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="card" id="card-d46fc674c0d4" data-id="d46fc674c0d4" data-customer="Assa Abloy">
+          <div class="card-top">
+            <span class="source-badge" title=""Assa Abloy strategy innovation" - Google News">"Assa Abloy strategy innovation" - Google News</span>
+            <span class="score-dot medium"
+                  title="Relevance 7/10"></span>
+          </div>
+          <h3><a href="https://news.google.com/rss/articles/CBMihwFBVV95cUxPSU5iWW5TbW9KRC1uQjh6R0VTZ1h2dmV1M0Q2TURhd2pVSXJZRUlTWS1Pd1dKd0R6UnhpUEdQa3pTd04zNkdWejh3d2M2Y2Z2RzRwNGd2NTl2ZmxVU0N4Wno2UmVzMmN2NUNGRno0dDFFOWppeTNMYi1jb0d5b09nMC0zRTJIT2s?oc=5" target="_blank" rel="noopener">ASSA ABLOY acquires MR Group´s hardware division in Portugal - Assa Abloy</a></h3>
+          <p class="abstract">ASSA ABLOY has acquired MR Group's hardware division in Portugal, continuing its strategy of bolt-on acquisitions to expand its EMEA footprint. This move reflects the company's ongoing ambition to consolidate the European hardware and security market.</p>
+          <div class="card-footer">
+            <span class="card-date">Tue, 01 Ju</span>
+            <div class="card-actions">
+              <button class="btn-read" onclick="markRead('d46fc674c0d4')">Mark read</button>
+              <button class="btn-keep" id="keep-d46fc674c0d4" onclick="toggleKeep('d46fc674c0d4')">Keep</button>
             </div>
           </div>
         </div>
@@ -777,103 +861,29 @@
                   title="Relevance 7/10"></span>
           </div>
           <h3><a href="https://news.google.com/rss/articles/CBMihwFBVV95cUxQdzQwM2l1aHBJLXRuVUdmWjUtSGtSOWMxd3lsSnN4NGx2eXdiQXZ3VjhiaE1fWkZNbzRHTXNxTUxpT1d2U1Y1S2Y1V1VzVS1mbnFXdlhYRVBmMWxqSjdob2hkLUhLamJnV20xOUJfQzVBQlBnSnZCSFdOUmdzVGUyM2JkZlNRdEU?oc=5" target="_blank" rel="noopener">ASSA ABLOY acquires Lawrence Hardware and Gallery Specialty in Canada - Assa Abloy</a></h3>
-          <p class="abstract">ASSA ABLOY has acquired Lawrence Hardware and Gallery Specialty in Canada, expanding its hardware portfolio and distribution capabilities in the North American market. This acquisition reflects the company's active M&A strategy to grow market share and product breadth across its Americas division.</p>
+          <p class="abstract">ASSA ABLOY has acquired Lawrence Hardware and Gallery Specialty in Canada, further strengthening its Americas business unit through targeted acquisitions. This is consistent with the company's decentralized, acquisition-led growth model across multiple geographies.</p>
           <div class="card-footer">
             <span class="card-date">Wed, 06 Se</span>
             <div class="card-actions">
               <button class="btn-read" onclick="markRead('d359c2b94d9c')">Mark read</button>
-              <button class="btn-keep" id="keep-d359c2b94d9c"
-                onclick="toggleKeep('d359c2b94d9c')">Keep</button>
+              <button class="btn-keep" id="keep-d359c2b94d9c" onclick="toggleKeep('d359c2b94d9c')">Keep</button>
             </div>
           </div>
         </div>
         
-        <div class="card" id="card-489e7d2e92dd" data-id="489e7d2e92dd" data-customer="Assa Abloy">
-          <div class="card-top">
-            <span class="source-badge" title=""Assa Abloy digital banking technology" - Google News">"Assa Abloy digital banking technology" - Google News</span>
-            <span class="score-dot medium"
-                  title="Relevance 7/10"></span>
-          </div>
-          <h3><a href="https://news.google.com/rss/articles/CBMioAFBVV95cUxOb1dPNWc3eWFHZXcxR3VuVEpFeFAyQW5SbTV5UEZiSG05WjZjUGRaZ3FDWUJSZURCZVp2dXRrbEVRLWRyMjhqLXhuU3lXMnNzcllVRXdqTC01QkFaWFNja1M5MEtmMUxXZVIzamVCRWJWSUtWbU41V0JXNTh2Njg3dGR5cXZQWm1VcnIyTFlGbGRlNVZOUWtTSHYwcEpCUm1G?oc=5" target="_blank" rel="noopener">Assa Abloy acquires another physical access control provider - Biometric Update</a></h3>
-          <p class="abstract">ASSA ABLOY has acquired another physical access control provider, further strengthening its biometric and digital access control capabilities. This move aligns with the company's strategy to consolidate the access control market and expand its Commerce platform with complementary technology assets.</p>
-          <div class="card-footer">
-            <span class="card-date">Mon, 22 Ju</span>
-            <div class="card-actions">
-              <button class="btn-read" onclick="markRead('489e7d2e92dd')">Mark read</button>
-              <button class="btn-keep" id="keep-489e7d2e92dd"
-                onclick="toggleKeep('489e7d2e92dd')">Keep</button>
-            </div>
-          </div>
-        </div>
-        
-        <div class="card" id="card-ce790cc1d15c" data-id="ce790cc1d15c" data-customer="Assa Abloy">
+        <div class="card" id="card-f1adbb0c6752" data-id="f1adbb0c6752" data-customer="Assa Abloy">
           <div class="card-top">
             <span class="source-badge" title=""Assa Abloy strategy innovation" - Google News">"Assa Abloy strategy innovation" - Google News</span>
             <span class="score-dot medium"
                   title="Relevance 7/10"></span>
           </div>
-          <h3><a href="https://news.google.com/rss/articles/CBMihwFBVV95cUxPMi11bGoyUmgyQlQxX0FjY19Jd1hBUmpKY3pYaDNxMmo4MWZPLTl3V2tCQkhLbEs5RVJiSW5Ib2xJaEVyd0JwWm5JWkFTSnV5OER6SVhvZDFqcE1vaUpTTW81M21ZMWZVSFZlcFJoLWhRNm5MWTdyeGZ6ZHliRmtONFZxRmY2Wnc?oc=5" target="_blank" rel="noopener">ASSA ABLOY hosts its Capital Markets Day - Assa Abloy</a></h3>
-          <p class="abstract">ASSA ABLOY hosted its Capital Markets Day, presenting its long-term strategy to investors and analysts including goals around digital access, sustainability, and acquisitive growth. The event signals confidence in the company's multi-divisional structure and its ability to deliver value through both organic and inorganic initiatives.</p>
+          <h3><a href="https://news.google.com/rss/articles/CBMigAFBVV95cUxQZFZwU2xOOUxtaDBVSkdEUWhhZk1hbmd3UHBuLUJuR2ZMT294SFVzblRnZFA0WWp0QndVVF93S2U1MjNtYUlTN0dYMjJxRkxtd1R6dk02bll1ay1ObmJpbjJFVFljSUpFT1NYYWQ5eWh3YTZLRk1IMWFDd2NPUzJTcg?oc=5" target="_blank" rel="noopener">ASSA ABLOY acquires Wesko Locks - Security Systems News</a></h3>
+          <p class="abstract">ASSA ABLOY has acquired Wesko Locks, adding another security hardware brand to its growing portfolio. This acquisition is part of ASSA ABLOY's broader strategy to expand its product range and market coverage in the locking and access control sector.</p>
           <div class="card-footer">
-            <span class="card-date">Wed, 19 No</span>
+            <span class="card-date">Wed, 26 Ju</span>
             <div class="card-actions">
-              <button class="btn-read" onclick="markRead('ce790cc1d15c')">Mark read</button>
-              <button class="btn-keep" id="keep-ce790cc1d15c"
-                onclick="toggleKeep('ce790cc1d15c')">Keep</button>
-            </div>
-          </div>
-        </div>
-        
-        <div class="card" id="card-669fe0fea4be" data-id="669fe0fea4be" data-customer="Assa Abloy">
-          <div class="card-top">
-            <span class="source-badge" title=""Assa Abloy strategy innovation" - Google News">"Assa Abloy strategy innovation" - Google News</span>
-            <span class="score-dot medium"
-                  title="Relevance 6/10"></span>
-          </div>
-          <h3><a href="https://news.google.com/rss/articles/CBMiwAFBVV95cUxON2VoWVNiV1FKZkUzRHlvUjdKSUZ2a0FkUmxwTW9PSW5SOVYxZWhmbWYtdWthMEx3VVhIY29DSVo5TXhfTHNWZ2psQzNIQzdjQ3JBWEZUN0J4ZlFqenlXUmx6TktZR0prdHp6VjZIa2ZqRDR6TXp5NjI4MDJQdVQwM3Z6dThLVmlfSWdUTGVHNWpmeFVqdDFIX2dnRFNpN0NuNVhaYkVWMTFQVTRGWjJma2ozWGdfbU1rZmtqVEcyV3c?oc=5" target="_blank" rel="noopener">Investors: we appreciate ASSA ABLOY’s commitment to sustainability - Assa Abloy</a></h3>
-          <p class="abstract">ASSA ABLOY reports that investors are increasingly valuing its commitment to sustainability, reinforcing the business case for continued ESG investment across product development and operations. Investor appreciation for these initiatives may influence strategic priorities and capital allocation decisions going forward.</p>
-          <div class="card-footer">
-            <span class="card-date">Tue, 23 Au</span>
-            <div class="card-actions">
-              <button class="btn-read" onclick="markRead('669fe0fea4be')">Mark read</button>
-              <button class="btn-keep" id="keep-669fe0fea4be"
-                onclick="toggleKeep('669fe0fea4be')">Keep</button>
-            </div>
-          </div>
-        </div>
-        
-        <div class="card" id="card-1feb6e4220d1" data-id="1feb6e4220d1" data-customer="Assa Abloy">
-          <div class="card-top">
-            <span class="source-badge" title=""Assa Abloy strategy innovation" - Google News">"Assa Abloy strategy innovation" - Google News</span>
-            <span class="score-dot medium"
-                  title="Relevance 6/10"></span>
-          </div>
-          <h3><a href="https://news.google.com/rss/articles/CBMisAFBVV95cUxNOUpPYlk5RU5aamZLVTlqcC1kRE5kTUdCS3JlUzlIQjV3alFYZmFFaUp2VHdtdmNWcjY0R2V1M1dqOUNNcWZVaDh4bkdtT1FZcE1Qd0tQR0wyU3VEU1k2WDVZWWFubnB3LVQ1YWNtYUlITXEyYno5NG05Q1hGVG81WFQtTTc2eVRHenZIdW52MFRKZV9sNjZETHVzb3NwazBhbWVUMjd2Q2JKMUhONmt5OA?oc=5" target="_blank" rel="noopener">Sustainability is a clear driver for economic growth - Assa Abloy</a></h3>
-          <p class="abstract">ASSA ABLOY positions sustainability as a clear economic growth driver, arguing that green product innovation and responsible operations contribute directly to financial performance. This narrative aligns with broader market trends where sustainability credentials are becoming a purchasing criterion for institutional and commercial customers.</p>
-          <div class="card-footer">
-            <span class="card-date">Tue, 12 Se</span>
-            <div class="card-actions">
-              <button class="btn-read" onclick="markRead('1feb6e4220d1')">Mark read</button>
-              <button class="btn-keep" id="keep-1feb6e4220d1"
-                onclick="toggleKeep('1feb6e4220d1')">Keep</button>
-            </div>
-          </div>
-        </div>
-        
-        <div class="card" id="card-791e5ca0ab0c" data-id="791e5ca0ab0c" data-customer="Assa Abloy">
-          <div class="card-top">
-            <span class="source-badge" title=""Assa Abloy strategy innovation" - Google News">"Assa Abloy strategy innovation" - Google News</span>
-            <span class="score-dot medium"
-                  title="Relevance 6/10"></span>
-          </div>
-          <h3><a href="https://news.google.com/rss/articles/CBMi2AFBVV95cUxQM20xOHhzZkE0aVhDbko1RVNCMHZZYkVIU2JkSUVaWFAtMU9WMi1UeEY0cFJQYlY2QkMzdGljWDI3QldoamlZdWNUOVFnZHhoN0JScmtJRDFVNTN4RElFZmVsYzYxRXZaUURHMGVQWDJMbEstNXJndjBKalpTdWNSNWpqSUZVREhrNlc4dDhxRTVpWlB4TEYzR1d6ajh3RGh5VUFTdmhKSDhxOUE3RUkweVB2RHdKWGkxRmJhMEJ6S1FSQW9mV1AybXdhb19pdHlWUThXV2dMbXc?oc=5" target="_blank" rel="noopener">ASSA ABLOY Entrance Systems drives innovation at Horizon 29 with OH1142P Dual Drive installation - Assa Abloy</a></h3>
-          <p class="abstract">ASSA ABLOY Entrance Systems is driving innovation through its OH1142P Dual Drive installation at Horizon 29, demonstrating advanced automated door solutions for large-scale commercial environments. This highlights the company's continued investment in entrance system technology across its independently operating business units.</p>
-          <div class="card-footer">
-            <span class="card-date">Wed, 17 Se</span>
-            <div class="card-actions">
-              <button class="btn-read" onclick="markRead('791e5ca0ab0c')">Mark read</button>
-              <button class="btn-keep" id="keep-791e5ca0ab0c"
-                onclick="toggleKeep('791e5ca0ab0c')">Keep</button>
+              <button class="btn-read" onclick="markRead('f1adbb0c6752')">Mark read</button>
+              <button class="btn-keep" id="keep-f1adbb0c6752" onclick="toggleKeep('f1adbb0c6752')">Keep</button>
             </div>
           </div>
         </div>
@@ -896,7 +906,7 @@
 
   <p class="archive-intro">
     Articles you've marked <strong>Keep</strong> are saved here permanently and survive the weekly refresh.
-    Remove an article to delete it from the archive.
+    Click <strong>Remove</strong> to delete from the archive.
   </p>
 
   <div class="article-grid" id="archive-grid"></div>
@@ -925,13 +935,12 @@ function toggleCustomer(idx) {
 }
 
 // ── localStorage helpers ───────────────────────────────────────────────────
-const LS_READ   = 'dxd_read_';
-const LS_KEPT   = 'dxd_kept_';
+const LS_READ = 'dxd_read_';
+const LS_KEPT = 'dxd_kept_';
 
 function isRead(id)  { return localStorage.getItem(LS_READ + id) === '1'; }
 function isKept(id)  { return !!getKept(id); }
 function getKept(id) { try { return JSON.parse(localStorage.getItem(LS_KEPT + id)); } catch(e) { return null; } }
-
 function setRead(id)    { localStorage.setItem(LS_READ + id, '1'); }
 function setKept(id, d) { localStorage.setItem(LS_KEPT + id, JSON.stringify(d)); }
 function removeKept(id) { localStorage.removeItem(LS_KEPT + id); }
@@ -947,12 +956,22 @@ function allKeptItems() {
   return items;
 }
 
-// ── Apply saved states on load ─────────────────────────────────────────────
+// ── Apply saved state on load ──────────────────────────────────────────────
 function applyState() {
   document.querySelectorAll('.card[data-id]').forEach(card => {
     const id = card.dataset.id;
-    if (isRead(id))  { card.classList.add('read'); }
-    if (isKept(id))  { const kb = document.getElementById('keep-' + id); if (kb) kb.classList.add('kept'); kb.textContent = 'Kept ✓'; }
+    if (isRead(id)) {
+      card.style.maxHeight = '0';
+      card.style.padding = '0';
+      card.style.margin = '0';
+      card.style.border = 'none';
+      card.style.overflow = 'hidden';
+      card.style.opacity = '0';
+    }
+    if (isKept(id)) {
+      const kb = document.getElementById('keep-' + id);
+      if (kb) { kb.classList.add('kept'); kb.textContent = 'Kept ✓'; }
+    }
   });
   updateArchiveCount();
 }
@@ -962,15 +981,16 @@ function markRead(id) {
   setRead(id);
   const card = document.getElementById('card-' + id);
   if (card) {
-    card.style.transition = 'opacity 0.3s, max-height 0.4s 0.3s, padding 0.4s 0.3s, margin 0.4s 0.3s';
+    card.style.transition = 'opacity 0.25s';
     card.style.opacity = '0';
     setTimeout(() => {
+      card.style.transition = 'max-height 0.3s, padding 0.3s, margin 0.3s';
       card.style.maxHeight = '0';
       card.style.padding = '0';
       card.style.margin = '0';
       card.style.border = 'none';
       card.style.overflow = 'hidden';
-    }, 300);
+    }, 250);
   }
 }
 
@@ -991,24 +1011,21 @@ function toggleKeep(id) {
   updateArchiveCount();
 }
 
-// ── Archive count badge ────────────────────────────────────────────────────
+// ── Archive count ──────────────────────────────────────────────────────────
 function updateArchiveCount() {
   const n = allKeptItems().length;
   const badge = document.getElementById('archive-count');
   if (badge) badge.textContent = n;
 }
 
-// ── Render archive tab ─────────────────────────────────────────────────────
+// ── Render archive ─────────────────────────────────────────────────────────
 function renderArchive() {
   const grid = document.getElementById('archive-grid');
   const empty = document.getElementById('archive-empty');
   const items = allKeptItems().sort((a, b) => (b.keptAt || '').localeCompare(a.keptAt || ''));
 
   grid.innerHTML = '';
-  if (items.length === 0) {
-    empty.style.display = '';
-    return;
-  }
+  if (items.length === 0) { empty.style.display = ''; return; }
   empty.style.display = 'none';
 
   items.forEach(item => {
@@ -1029,7 +1046,6 @@ function renderArchive() {
 
 function unkeepFromArchive(id) {
   removeKept(id);
-  // also un-highlight Keep button on digest tab if present
   const btn = document.getElementById('keep-' + id);
   if (btn) { btn.classList.remove('kept'); btn.textContent = 'Keep'; }
   updateArchiveCount();
@@ -1040,60 +1056,59 @@ function escHtml(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-// ── Article data lookup (populated from template) ─────────────────────────
+// ── Article data (for Keep records) ───────────────────────────────────────
 const ARTICLES = {
   
-  "753706bafbc1": { id:"753706bafbc1", customer:"Danske Bank", title:"Danske Bank Invests in Cloud Technology and Signs a Multiyear Agreement With AWS - Fintech Finance", url:"https://news.google.com/rss/articles/CBMivAFBVV95cUxPTTRreTQ2LXJfenk4WHZ2M21Gc3dZZ0t0dFFGZlU4QTQ1Z3J2bExVeDdDYXJlR20waUZPU3I1UWx0MkZvNFdPYTFaMnppckt0WFZISDdOTTNCWjRyVnZ4TlgwZUdjMW0weEtyYjgzWHBkMUxhMnZWQk1BejFrY1ExUzdZUms4ZnhaZGFMVU1XZTF0MDVXcnFvWDVaajV6ZFlTYmtDR3AxUld4LXcxUDVmdExEcm41cHRsUC1CNQ?oc=5", source:"\"Danske Bank digital banking technology\" - Google News", abstract:"Danske Bank has signed a multiyear cloud infrastructure agreement with AWS, signalling a major strategic shift toward cloud-native operations. This investment underpins the bank\u0027s Forward \u002728 strategy and its ambitions to accelerate digital product development and scalability across its Nordic and Baltic markets.", published:"Wed, 20 Mar 2024 07:00:00 GMT", score:9 },
+  "753706bafbc1": { id:"753706bafbc1", customer:"Danske Bank", title:"Danske Bank Invests in Cloud Technology and Signs a Multiyear Agreement With AWS - Fintech Finance", url:"https://news.google.com/rss/articles/CBMivAFBVV95cUxPTTRreTQ2LXJfenk4WHZ2M21Gc3dZZ0t0dFFGZlU4QTQ1Z3J2bExVeDdDYXJlR20waUZPU3I1UWx0MkZvNFdPYTFaMnppckt0WFZISDdOTTNCWjRyVnZ4TlgwZUdjMW0weEtyYjgzWHBkMUxhMnZWQk1BejFrY1ExUzdZUms4ZnhaZGFMVU1XZTF0MDVXcnFvWDVaajV6ZFlTYmtDR3AxUld4LXcxUDVmdExEcm41cHRsUC1CNQ?oc=5", source:"\"Danske Bank digital banking technology\" - Google News", abstract:"Danske Bank has signed a multiyear cloud agreement with AWS, signalling a major infrastructure shift to support its digital transformation agenda. This investment underpins the bank\u0027s ambition to accelerate innovation, improve scalability, and enhance digital customer experiences across its markets.", published:"Wed, 20 Mar 2024 07:00:00 GMT", score:9 },
   
-  "b1d39373d1ab": { id:"b1d39373d1ab", customer:"Danske Bank", title:"Danske Bank to become the first financial institution in the Nordic region to implement Aladdin Wealth\u2122 into its personal customer investment services - Danske Bank", url:"https://news.google.com/rss/articles/CBMijAFBVV95cUxPWnoyWTFFVkFWNHljMmNTclhDLXAwbVhYbDlHVzdhQ2FFZ243Z3RTdHdhcjd1blUtOXFvZG1RREEtVXZqbGJ5bVJRN1NNa1U5eWpwMkh4a2tSRW1SdldKNmdfRXJnOUhBazlERm5SS1drbi12eTF2cWYwYXVjOFAxakU0VDM1OTNyejI3aA?oc=5", source:"\"Danske Bank digital banking technology\" - Google News", abstract:"Danske Bank is set to become the first financial institution in the Nordic region to implement BlackRock\u0027s Aladdin Wealth platform for personal customer investment services. This move positions Danske Bank as a first mover in AI-driven wealth personalisation within the Nordic retail banking landscape.", published:"Thu, 30 Jan 2025 08:00:00 GMT", score:9 },
+  "520a3372adc4": { id:"520a3372adc4", customer:"Danske Bank", title:"How Danske Bank is Betting Big on AI and Polish Talent to Deliver Forward \u201928 - Disruption Banking", url:"https://news.google.com/rss/articles/CBMivwFBVV95cUxNUUl2enJvOHhnY05rYlFIWU54N2h0YkFYb3JvU1JJeFZsT3czRDNXN3FNU2YwNmRtd0RJSTZZYUVBVURpMjlXLTZrakFfRHBaNkJUZzJjQU90VHhBVEdEWXdkR25GQ0tYR1h0aDkwVGswYVJaR1V5eFlVNHRPTi1IX05IeXlKNXl2ZkQxemU1bHNfWk1YZjRDajVzSkNhZmFrdzdvbWpyT0hhR0xRSWNleGNFZmxReEd4Q0NpbHF0RQ?oc=5", source:"\"Danske Bank digital banking technology\" - Google News", abstract:"Danske Bank is heavily investing in AI capabilities and leveraging Polish tech talent as part of its Forward \u002728 strategic plan. The article details how the bank is embedding AI across operations and product development to drive competitive differentiation by 2028.", published:"Tue, 31 Mar 2026 07:00:00 GMT", score:9 },
   
-  "b82494e40eb1": { id:"b82494e40eb1", customer:"Danske Bank", title:"Danske Bank appoints AI pioneer to lead new Belfast centre of excellence and drive next-generation banking innovation - Belfast News Letter", url:"https://news.google.com/rss/articles/CBMi9gFBVV95cUxObUpGeHNSZmo0d0RLSlZhY2F4bjAxSXJXTEFRLUtKRk9WWHd6RTVkTGZmbUVCT08xUWc0TEN4Q09Id3lEUGJoVmZSTlJib3JOWUEyWTVKOFdEVHJCZ1VBQ1NLcVRDei1nRWZZd3RKZWdxZWNUcVBkX3lmN0lfZkdIY3Y2SkpfZDlBZWN1WUhEMks2blpMejBRWi1aanNlaDl0ZU1BTDRDQU4yc2pIZmUtSWI3ejRqbjY2QzZXNmFMU0NyaXBzeEw4NVJLVEF0cVNxa29BS0daY19EY0R4SkcwVzR6dFVnNUM3aFlDc0hwQXU1VEVtZ0E?oc=5", source:"\"Danske Bank strategy innovation\" - Google News", abstract:"Danske Bank has appointed an AI pioneer to lead a new centre of excellence in Belfast, focused on driving next-generation banking innovation. The appointment reflects the bank\u0027s deepening commitment to building in-house AI capabilities as a core pillar of its digital transformation agenda.", published:"Sat, 10 Jan 2026 08:00:00 GMT", score:9 },
+  "e6350a1f267b": { id:"e6350a1f267b", customer:"Danske Bank", title:"Denmark\u2019s Danske Bank enters multi-year cloud partnership with AWS - FinTech Futures", url:"https://news.google.com/rss/articles/CBMirwFBVV95cUxOYkRFbVpEMC1xWkVLeHducE96OEdYNkhkLWY4SGNSY2tIVWZyYk03YmhnM0g4VTRZeG13aTR6U1RmbE5PY0RGeTUtdFFuT1BQYXptcUt2UklySW5McmxKSlpQcHNtd3JSLVdZd2E0ZDlVYUJ4Q3Nna3FiTW1acmp6T1ZFTXFueEtabE40czAxWnlUb25iak5TT1RIWWYwZ3Bpc1BzZzRqVW84LTJxQlJ3?oc=5", source:"\"Danske Bank digital banking technology\" - Google News", abstract:"Danske Bank has entered a multi-year cloud partnership with AWS, marking a foundational step in modernising its technology infrastructure. The deal is expected to enable faster product development, improved resilience, and enhanced digital service delivery across its Nordic and Baltic footprint.", published:"Wed, 26 Mar 2025 14:39:09 GMT", score:9 },
   
-  "520a3372adc4": { id:"520a3372adc4", customer:"Danske Bank", title:"How Danske Bank is Betting Big on AI and Polish Talent to Deliver Forward \u201928 - Disruption Banking", url:"https://news.google.com/rss/articles/CBMivwFBVV95cUxNUUl2enJvOHhnY05rYlFIWU54N2h0YkFYb3JvU1JJeFZsT3czRDNXN3FNU2YwNmRtd0RJSTZZYUVBVURpMjlXLTZrakFfRHBaNkJUZzJjQU90VHhBVEdEWXdkR25GQ0tYR1h0aDkwVGswYVJaR1V5eFlVNHRPTi1IX05IeXlKNXl2ZkQxemU1bHNfWk1YZjRDajVzSkNhZmFrdzdvbWpyT0hhR0xRSWNleGNFZmxReEd4Q0NpbHF0RQ?oc=5", source:"\"Danske Bank digital banking technology\" - Google News", abstract:"Danske Bank is making significant investments in AI and leveraging Polish tech talent to deliver its Forward \u002728 strategic plan, which targets digital-first banking experiences. The article explores how the bank is restructuring its technology workforce and innovation model to compete with neobanks and digital challengers.", published:"Tue, 31 Mar 2026 07:00:00 GMT", score:9 },
+  "4d26bd3d8104": { id:"4d26bd3d8104", customer:"Danske Bank", title:"Danske Bank Appoints Fiona Browne as its First Head of AI - Fintech Finance", url:"https://news.google.com/rss/articles/CBMinAFBVV95cUxQbEo0azRqTkJUUURIdWNpZGY3dF9sUFV1VU1sV2hHVTdkOVJZQVNrS2RiNHhVaVpqeGJFM2JTd0RCS2tCQ004MTZFeVlNTzZWMG9MemNHNXBDdkdXTW9aaGM0bVRGTGo3OXF4NmVtMzRILXZ0WWlyUHpkSnBQNkxZbmhDcUo4UmVuT0FXcjZFMG1JWGJidGxpXzdSaGE?oc=5", source:"\"Danske Bank strategy innovation\" - Google News", abstract:"Danske Bank has appointed Fiona Browne as its first-ever Head of AI, underscoring the bank\u0027s strategic prioritisation of artificial intelligence across its operations. This move signals a formalisation of AI governance and acceleration of AI-powered product and customer experience initiatives.", published:"Fri, 09 Jan 2026 08:00:00 GMT", score:9 },
   
-  "e6350a1f267b": { id:"e6350a1f267b", customer:"Danske Bank", title:"Denmark\u2019s Danske Bank enters multi-year cloud partnership with AWS - FinTech Futures", url:"https://news.google.com/rss/articles/CBMirwFBVV95cUxOYkRFbVpEMC1xWkVLeHducE96OEdYNkhkLWY4SGNSY2tIVWZyYk03YmhnM0g4VTRZeG13aTR6U1RmbE5PY0RGeTUtdFFuT1BQYXptcUt2UklySW5McmxKSlpQcHNtd3JSLVdZd2E0ZDlVYUJ4Q3Nna3FiTW1acmp6T1ZFTXFueEtabE40czAxWnlUb25iak5TT1RIWWYwZ3Bpc1BzZzRqVW84LTJxQlJ3?oc=5", source:"\"Danske Bank digital banking technology\" - Google News", abstract:"Danske Bank has entered a multi-year cloud partnership with AWS, migrating core infrastructure to enable faster innovation, improved scalability, and enhanced customer-facing digital services. The deal is a foundational enabler of the bank\u0027s digital CX and AI personalisation ambitions across the Nordic and Baltic regions.", published:"Wed, 26 Mar 2025 14:39:09 GMT", score:9 },
+  "b00c8030248b": { id:"b00c8030248b", customer:"Danske Bank", title:"Interview - Danske Bank: Leveraging AI to enhance colleague and customer experience - Sync NI", url:"https://news.google.com/rss/articles/CBMiqAFBVV95cUxPdVVkZkdMRlpVTUdaZnNwZXhIQXBwWmw5SHpZMVp3RTE1cEVIOXZSRFdDeXVUR3JRR241ZkN6Uk52QTRaUmk2MDNhc2VHLU51M3FrZkZGMnBzaHJxMWJxNHZMYUxhM3p1WGZCTEJJeFQ0emtwd2ZUemJzdmhLZFY4bGt5TU12UzhGRXJMSGlVZXpWMVZMZFhFYnRLTXdHTFpRSkJKZVlOREs?oc=5", source:"\"Danske Bank digital banking technology\" - Google News", abstract:"Danske Bank outlines how it is leveraging AI to improve both colleague productivity and customer experience, with practical applications across its operations. The article provides direct insight into the bank\u0027s AI deployment approach and its ambitions for enhancing digital CX.", published:"Fri, 31 Oct 2025 07:00:00 GMT", score:9 },
   
-  "4d26bd3d8104": { id:"4d26bd3d8104", customer:"Danske Bank", title:"Danske Bank Appoints Fiona Browne as its First Head of AI - Fintech Finance", url:"https://news.google.com/rss/articles/CBMinAFBVV95cUxQbEo0azRqTkJUUURIdWNpZGY3dF9sUFV1VU1sV2hHVTdkOVJZQVNrS2RiNHhVaVpqeGJFM2JTd0RCS2tCQ004MTZFeVlNTzZWMG9MemNHNXBDdkdXTW9aaGM0bVRGTGo3OXF4NmVtMzRILXZ0WWlyUHpkSnBQNkxZbmhDcUo4UmVuT0FXcjZFMG1JWGJidGxpXzdSaGE?oc=5", source:"\"Danske Bank strategy innovation\" - Google News", abstract:"Danske Bank has appointed Fiona Browne as its first-ever Head of AI, a landmark hire that signals the bank is institutionalising artificial intelligence as a strategic function. The role will oversee AI governance, ethics, and deployment across both customer-facing and internal banking operations.", published:"Fri, 09 Jan 2026 08:00:00 GMT", score:9 },
+  "4c32659378aa": { id:"4c32659378aa", customer:"Danske Bank", title:"Danske Bank invests in cloud technology and signs a multiyear agreement with AWS - Danske Bank", url:"https://news.google.com/rss/articles/CBMijAFBVV95cUxQWV9QV0R0U0hLSjE5WnBMRU5MMEwyQkYyWkxudWhBMDRkRm91UmlOdDZaajY2TFBocE5kTEZmQlRnTE5QQnVpRFJQYm1icmZrRUQ5M2VUOTdZX0hvS0FRVHdldDIyN3BXd3NJLU1ndDNBNHhHT1AwVkg4QmJNZ3g1NC01NThBbGpiSWtvUg?oc=5", source:"\"Danske Bank strategy innovation\" - Google News", abstract:"Danske Bank has formalised its multi-year cloud agreement with AWS, committing to a major migration of its technology infrastructure to support digital innovation. This deal is central to the bank\u0027s strategy to build a more agile, scalable, and customer-centric banking platform.", published:"Wed, 20 Mar 2024 07:00:00 GMT", score:9 },
   
-  "b00c8030248b": { id:"b00c8030248b", customer:"Danske Bank", title:"Interview - Danske Bank: Leveraging AI to enhance colleague and customer experience - Sync NI", url:"https://news.google.com/rss/articles/CBMiqAFBVV95cUxPdVVkZkdMRlpVTUdaZnNwZXhIQXBwWmw5SHpZMVp3RTE1cEVIOXZSRFdDeXVUR3JRR241ZkN6Uk52QTRaUmk2MDNhc2VHLU51M3FrZkZGMnBzaHJxMWJxNHZMYUxhM3p1WGZCTEJJeFQ0emtwd2ZUemJzdmhLZFY4bGt5TU12UzhGRXJMSGlVZXpWMVZMZFhFYnRLTXdHTFpRSkJKZVlOREs?oc=5", source:"\"Danske Bank digital banking technology\" - Google News", abstract:"An in-depth interview with Danske Bank leadership explores how the bank is leveraging AI to improve both colleague productivity and customer-facing experiences across its digital channels. The piece offers direct insight into Danske Bank\u0027s AI deployment priorities and the tangible outcomes it expects from its investments.", published:"Fri, 31 Oct 2025 07:00:00 GMT", score:9 },
+  "cd4b632e6525": { id:"cd4b632e6525", customer:"Danske Bank", title:"Danske Bank migrates infrastructure to cloud with AWS - IBS Intelligence", url:"https://news.google.com/rss/articles/CBMilwFBVV95cUxOU2llTnFFQUNwaWY3RmkyNTdlbTJ0OUt1NTduY0k3cG0xUXhKbVMxdE5pSV96b0M3N0o2RXI0Q3pYdzJmRFpDTy1lWU1QaDJIWndMS0EwS2ZMSUF6dmMxcnlCUDEzQVgxY0JOWWcyaENVS3Z1UVU3Smg1M0UyVlIzeXRlOThsZGNvRUJ2WE5vWjNCaWNleTFB?oc=5", source:"\"Danske Bank digital banking technology\" - Google News", abstract:"Danske Bank has begun migrating its infrastructure to the cloud in partnership with AWS, a foundational move to modernise its technology capabilities. The migration is expected to improve system agility, reduce operational complexity, and enable faster delivery of digital customer experiences.", published:"Thu, 21 Mar 2024 07:00:00 GMT", score:9 },
   
-  "4c32659378aa": { id:"4c32659378aa", customer:"Danske Bank", title:"Danske Bank invests in cloud technology and signs a multiyear agreement with AWS - Danske Bank", url:"https://news.google.com/rss/articles/CBMijAFBVV95cUxQWV9QV0R0U0hLSjE5WnBMRU5MMEwyQkYyWkxudWhBMDRkRm91UmlOdDZaajY2TFBocE5kTEZmQlRnTE5QQnVpRFJQYm1icmZrRUQ5M2VUOTdZX0hvS0FRVHdldDIyN3BXd3NJLU1ndDNBNHhHT1AwVkg4QmJNZ3g1NC01NThBbGpiSWtvUg?oc=5", source:"\"Danske Bank strategy innovation\" - Google News", abstract:"Danske Bank\u0027s official announcement of its multiyear AWS cloud agreement details the bank\u0027s ambition to migrate workloads to the cloud to enhance agility, resilience, and the pace of digital innovation. The investment is described as foundational to delivering the Forward \u002728 strategy and next-generation mobile banking capabilities.", published:"Wed, 20 Mar 2024 07:00:00 GMT", score:9 },
+  "4df5efec923a": { id:"4df5efec923a", customer:"Danske Bank", title:"Danske Bank further strengthens Generative AI focus with new leadership appointment - Danske Bank", url:"https://news.google.com/rss/articles/CBMifEFVX3lxTE01YW5wVnZlZ090QTB5czlvZXRlUVRza0hSM0xVVklwSXBWMElLU1NZTXN4cmZ0bHh3LUhSU3NydEtVdnV0SE5TWl9SdkFoVHhZY09zTWdya1RBLUVCY0F5czlHbUJEMzRPbHkxeTBhckhIWEJ2V2ZYWUlPbXI?oc=5", source:"\"Danske Bank digital banking technology\" - Google News", abstract:"Danske Bank has made a new leadership appointment to strengthen its Generative AI focus, reflecting the bank\u0027s intensified commitment to embedding GenAI across its operations. This move signals that GenAI is being treated as a strategic priority with dedicated executive ownership.", published:"Mon, 16 Jun 2025 07:00:00 GMT", score:9 },
   
-  "eb0fefa38cde": { id:"eb0fefa38cde", customer:"Danske Bank", title:"Danske Bank to enhance customer experience with new platform - Danske Bank", url:"https://news.google.com/rss/articles/CBMijAFBVV95cUxQS2dTZG5wMTQwT3hBVjRQa0hrTU9JOHpON2ZlT0wxM1N2NWcwdjlIVnhaNHI1eDJ6eFk5NS1DSXdPT19pYkx4dFlCR3J1WEVvZDhIX0FOb0Rsb3pBcG9wQ2doZ1lBdlJhanRmYm9aZFBfVlRSZ0ZVQkw5ZlFWQkZDOEQ3QlZFZ25aV1FOZQ?oc=5", source:"\"Danske Bank strategy innovation\" - Google News", abstract:"Danske Bank has announced plans to enhance customer experience through the deployment of a new technology platform designed to improve personalisation and digital service delivery. The initiative directly aligns with the bank\u0027s Forward \u002728 goals and its commitment to becoming a leader in Nordic digital banking CX.", published:"Thu, 11 Jan 2024 08:00:00 GMT", score:9 },
+  "4e0f810af26f": { id:"4e0f810af26f", customer:"Danske Bank", title:"Danske Bank Increases Investments in Generative AI - Danske Bank", url:"https://news.google.com/rss/articles/CBMifEFVX3lxTFB1QWtPTWtBdks1MU9rRktZOHZ5ZExWWTNEbFJHM1lHVzBQZkJVWlhPcE5LRk1WNkhmdXhNUUZOT0JsdDN0dXZDdExyVURmb2ljQ3JfY1JYcVRQODU2UFIxdDRsUi1uNHZVMDlKeXhCTDIyTTV1ZXlpUHotdUg?oc=5", source:"\"Danske Bank digital banking technology\" - Google News", abstract:"Danske Bank has announced increased investments in Generative AI, committing greater resources to explore and scale AI-driven capabilities across the bank. This investment is central to the bank\u0027s ambition to lead on AI-powered personalisation and operational efficiency in Nordic banking.", published:"Thu, 14 Mar 2024 07:00:00 GMT", score:9 },
   
-  "4df5efec923a": { id:"4df5efec923a", customer:"Danske Bank", title:"Danske Bank further strengthens Generative AI focus with new leadership appointment - Danske Bank", url:"https://news.google.com/rss/articles/CBMifEFVX3lxTE01YW5wVnZlZ090QTB5czlvZXRlUVRza0hSM0xVVklwSXBWMElLU1NZTXN4cmZ0bHh3LUhSU3NydEtVdnV0SE5TWl9SdkFoVHhZY09zTWdya1RBLUVCY0F5czlHbUJEMzRPbHkxeTBhckhIWEJ2V2ZYWUlPbXI?oc=5", source:"\"Danske Bank digital banking technology\" - Google News", abstract:"Danske Bank has further strengthened its Generative AI focus with a new senior leadership appointment, signalling that GenAI is now a board-level strategic priority for the bank. The move reflects Danske Bank\u0027s ambition to industrialise Generative AI across both customer experience and internal operations within its Forward \u002728 timeframe.", published:"Mon, 16 Jun 2025 07:00:00 GMT", score:9 },
+  "63393f15709a": { id:"63393f15709a", customer:"Danske Bank", title:"Danske Bank Names Kasper Tj\u00f8rntved Davidsen as Chief AI Officer - CDO Magazine", url:"https://news.google.com/rss/articles/CBMirgFBVV95cUxNU0N1X2VsVFh3djh1TUhjMUVCVFlJOVF5MU4yNC02eUgxV3FGdWM3aXhXSng0TzYzeVc1WkdJdnMzTkhLa3h0bUp3TUlmOUdoRjJwcXl1TWtEek5RMHZUN1BfdF9tajlDYVRtWUtTcVYtbDg5NWRJbnVPaVZDV3haQ3l5Zk96akdDZjYyWTJxbkhOVWl4NVBPemdzRnJ5NGIwN3dZcmp6MVNDTmRUbVE?oc=5", source:"\"Danske Bank strategy innovation\" - Google News", abstract:"Danske Bank has appointed Kasper Tj\u00f8rntved Davidsen as its Chief AI Officer, formalising AI leadership at the C-suite level. This appointment signals that AI strategy and execution will now have dedicated senior ownership, accelerating the bank\u0027s AI ambitions across customer and operational domains.", published:"Tue, 01 Jul 2025 07:00:00 GMT", score:9 },
   
-  "cd4b632e6525": { id:"cd4b632e6525", customer:"Danske Bank", title:"Danske Bank migrates infrastructure to cloud with AWS - IBS Intelligence", url:"https://news.google.com/rss/articles/CBMilwFBVV95cUxOU2llTnFFQUNwaWY3RmkyNTdlbTJ0OUt1NTduY0k3cG0xUXhKbVMxdE5pSV96b0M3N0o2RXI0Q3pYdzJmRFpDTy1lWU1QaDJIWndMS0EwS2ZMSUF6dmMxcnlCUDEzQVgxY0JOWWcyaENVS3Z1UVU3Smg1M0UyVlIzeXRlOThsZGNvRUJ2WE5vWjNCaWNleTFB?oc=5", source:"\"Danske Bank digital banking technology\" - Google News", abstract:"Danske Bank is actively migrating its infrastructure to the AWS cloud, a move that will provide the scalable, flexible foundation needed to accelerate digital product development and AI deployment. IBS Intelligence reports that the migration is a critical enabler of the bank\u0027s broader digital transformation and mobile banking ambitions.", published:"Thu, 21 Mar 2024 07:00:00 GMT", score:9 },
+  "b1d39373d1ab": { id:"b1d39373d1ab", customer:"Danske Bank", title:"Danske Bank to become the first financial institution in the Nordic region to implement Aladdin Wealth\u2122 into its personal customer investment services - Danske Bank", url:"https://news.google.com/rss/articles/CBMijAFBVV95cUxPWnoyWTFFVkFWNHljMmNTclhDLXAwbVhYbDlHVzdhQ2FFZ243Z3RTdHdhcjd1blUtOXFvZG1RREEtVXZqbGJ5bVJRN1NNa1U5eWpwMkh4a2tSRW1SdldKNmdfRXJnOUhBazlERm5SS1drbi12eTF2cWYwYXVjOFAxakU0VDM1OTNyejI3aA?oc=5", source:"\"Danske Bank digital banking technology\" - Google News", abstract:"Danske Bank is set to become the first Nordic financial institution to implement BlackRock\u0027s Aladdin Wealth platform into its personal customer investment services. This move reflects the bank\u0027s commitment to AI-driven personalisation and advanced portfolio management for retail clients.", published:"Thu, 30 Jan 2025 08:00:00 GMT", score:8 },
   
-  "4e0f810af26f": { id:"4e0f810af26f", customer:"Danske Bank", title:"Danske Bank Increases Investments in Generative AI - Danske Bank", url:"https://news.google.com/rss/articles/CBMifEFVX3lxTFB1QWtPTWtBdks1MU9rRktZOHZ5ZExWWTNEbFJHM1lHVzBQZkJVWlhPcE5LRk1WNkhmdXhNUUZOT0JsdDN0dXZDdExyVURmb2ljQ3JfY1JYcVRQODU2UFIxdDRsUi1uNHZVMDlKeXhCTDIyTTV1ZXlpUHotdUg?oc=5", source:"\"Danske Bank digital banking technology\" - Google News", abstract:"Danske Bank has formally announced an increase in its investments in Generative AI, citing the technology\u0027s potential to transform customer interactions, automate operations, and personalise financial services at scale. The announcement reinforces the bank\u0027s position as one of the most AI-forward retail banks in the Nordic region.", published:"Thu, 14 Mar 2024 07:00:00 GMT", score:9 },
+  "0f212837982e": { id:"0f212837982e", customer:"Danske Bank", title:"Danske Bank appoints two new execs to lead technology and data strategy - FinTech Futures", url:"https://news.google.com/rss/articles/CBMiwgFBVV95cUxPZGdhRzRTWjdKQ0FfamRaM1hKMUU2dVczMHRQTVRySXFqVUdGeFdzN0tqaWN6YWozMGlBN2diTTUwTlVFWEhoTjY2S3RjU2dseHFfTTR4RHNPekJJcEhWcDMxQ01GR1RWSWhqNEFncHNHX2Fsc3JFTmd3Rm5QSDJMdzBNSjRxZU1qT1Bnd0VMb0Nsd1dHa1VvbGhyUjlfN3dxU3c2VDlYeGhkRDlIcU9wcjcwdFZfZE5ydnhKcGthcnhyUQ?oc=5", source:"\"Danske Bank digital banking technology\" - Google News", abstract:"Danske Bank has appointed two new executives to lead its technology and data strategy, signalling a governance uplift around its digital and AI initiatives. These leadership changes indicate a sharpening focus on executing the bank\u0027s data-driven transformation agenda.", published:"Wed, 26 Mar 2025 14:04:23 GMT", score:8 },
   
-  "7443f85ad343": { id:"7443f85ad343", customer:"Assa Abloy", title:"Sustainability is a Sixth Wave of Innovation. Energy-harvesting access control puts you ahead of the curve - Assa Abloy", url:"https://news.google.com/rss/articles/CBMipAFBVV95cUxOMzNVUWZ6c3lqRUYxcFRQeHFqZkFLSnkwdk40TWNFaFZ3ajAyeERUS0NXTUFmOVpRTEFKV2Y4aE56dnpBNWxjY0VwTzNWZTMxbTZRcFpUT0JVSDhXbEYwak9uclhoNV9UUEt3VVJRS1VSQkRKbEdWWWtWbE5vWHZOMUhmMFZWNlNaOEppazhzTnJ0OURGQ3lwejJPaTVUdFRPQmFhaQ?oc=5", source:"\"Assa Abloy strategy innovation\" - Google News", abstract:"ASSA ABLOY frames sustainability as a sixth wave of innovation, highlighting energy-harvesting access control as a forward-looking technology that reduces power dependency while maintaining security performance. This positions the company\u0027s product roadmap at the intersection of environmental responsibility and cutting-edge access control innovation.", published:"Mon, 19 Jun 2023 07:00:00 GMT", score:8 },
+  "8b54a5330d77": { id:"8b54a5330d77", customer:"Assa Abloy", title:"ASSA ABLOY digital access solutions at Intersec 2026 - SourceSecurity.com", url:"https://news.google.com/rss/articles/CBMi1gFBVV95cUxQcjVNaGxoWF8wUENsMDJhMGQxSWExdDBESHlmWjZhVXhONGkySVV0QVNvNHZiUkpVcnExYUtMRHNKMGgtejh2Ylkwd1FfaHN6Qk1aNnVUTnNxUS1wMWdleVMxM01zUlVqSEZreXZpdHJRTnVVUDhid0dKS0VxWmRMM2lVekphd3hwMV9pU19EWFpFUmZYOGZEc3J0M3BvckFnTV94ZmxuZnFtLUUxX0xVN2dxdVdzb080RUwyakpMU1VwZ3RpU2QwUzZnVG95ZEFPa0JGNlhB?oc=5", source:"\"Assa Abloy digital banking technology\" - Google News", abstract:"ASSA ABLOY is showcasing its digital access solutions at Intersec 2026, highlighting the company\u0027s ongoing push to bring cutting-edge security technology to global markets. This is directly relevant to understanding ASSA ABLOY\u0027s product roadmap and customer engagement strategy in the security and access control space.", published:"Mon, 15 Dec 2025 08:00:00 GMT", score:8 },
   
-  "999810b6d9a9": { id:"999810b6d9a9", customer:"Assa Abloy", title:"Smart keys and cylinders simplify the switch from mechanical to digital access - Assa Abloy", url:"https://news.google.com/rss/articles/CBMihgFBVV95cUxNdWJWM3F2N3R0SWdMZGZVRkYzeERhei1iSzRhVFUwd2ROZGNLWUpfUGdyMzhwbXpWZ2V3Si1SMXZmUGR1aEI1S3JDRnhLdTdYVlBXaGVFM3ZtV2VPNzcyQ3BTaXBPeUV4NlBzLVpUQTJkWmp3N25RTVNPdWRZUmh3SGdkbVE1dw?oc=5", source:"\"Assa Abloy digital banking technology\" - Google News", abstract:"ASSA ABLOY is promoting smart keys and cylinders as a simplified migration path from mechanical to digital access control, lowering the barrier for end customers to modernize their security infrastructure. This offering is directly relevant to the company\u0027s Commerce platform strategy and cross-divisional digital transformation goals.", published:"Tue, 05 May 2026 07:00:00 GMT", score:8 },
+  "db7aeb891de3": { id:"db7aeb891de3", customer:"Assa Abloy", title:"Doors Company Evaluation Report 2025 | ASSA ABLOY, LIXIL, and JELD-WEN Lead with Smart Security, Sustainable Solutions, and Strategic Expansions - ResearchAndMarkets.com - Business Wire", url:"https://news.google.com/rss/articles/CBMiwgJBVV95cUxNRnRYU1JuWGRMSFR1SUtBbk1MMmRfbUFBSU52YUxRM2ZYSDRHby02MW53Q3VPdlJPeWJyS1Jfc3lueFFNRGpNa3lXY1BJNlBZekR2aERMTzQyeDlENUFGeW1qUTlmQTVIWENEdkcxWXZsNlp1X1A0VHNnT2V0X2lzU1MyZjFJUnJCUjYtU0hBVThkWFFTbExuY2pqdl9wNndaRUhxT2ExX2ZXQWRqM0RGc3F0d2ZZeWo0bXBoU1VUdFNBUTdXakJVVUpEV2xqNXFOR1dxX09nZ0dBdzhoRGFRa1laOXMzYjlyWGRGNHBfVDBzWE9fdm5JbDluUTU1eDc2Z3NCb0JQUlpDVjJ6cVVzNDUtdFNraTFDSm9nRXROTE8xZjRUOFE2Q3dOeGNEdkZJRVFKZFdlN1dqZmlUWVVQMlZ3?oc=5", source:"\"Assa Abloy strategy innovation\" - Google News", abstract:"A 2025 company evaluation report identifies ASSA ABLOY as a leader in the doors and security market, alongside LIXIL and JELD-WEN, with strengths in smart security, sustainability, and strategic expansions. This provides a useful competitive benchmark for ASSA ABLOY\u0027s market positioning and strategic priorities.", published:"Thu, 11 Sep 2025 07:00:00 GMT", score:8 },
   
-  "f6423cb3f20b": { id:"f6423cb3f20b", customer:"Assa Abloy", title:"An inspiring and well attended Capital Markets Day 2025 - Assa Abloy", url:"https://news.google.com/rss/articles/CBMiiwFBVV95cUxPV3otYlY0bmpjQ3V3MEFFbmV5dURpRGhYdVNxYUtRRFpMdVZsbTJNdDRwYTdGMk9WZl9ndnJSRVNRM09Dc0tiT2o0NXB3WWZPYUdVa3J4ZF9nb3JSS3RNQVo5NFoydkkzREFzelM5Wm85ZXI0RXF2VmRETnRlR09yT0I2VjlGYW0yNUdF?oc=5", source:"\"Assa Abloy strategy innovation\" - Google News", abstract:"ASSA ABLOY\u0027s Capital Markets Day 2025 drew strong attendance and outlined the company\u0027s strategic direction, financial targets, and innovation roadmap for the coming years. The event provides a comprehensive view of how ASSA ABLOY plans to balance organic growth, acquisitions, and digital transformation across its global business units.", published:"Fri, 21 Nov 2025 08:00:00 GMT", score:8 },
+  "f6423cb3f20b": { id:"f6423cb3f20b", customer:"Assa Abloy", title:"An inspiring and well attended Capital Markets Day 2025 - Assa Abloy", url:"https://news.google.com/rss/articles/CBMiiwFBVV95cUxPV3otYlY0bmpjQ3V3MEFFbmV5dURpRGhYdVNxYUtRRFpMdVZsbTJNdDRwYTdGMk9WZl9ndnJSRVNRM09Dc0tiT2o0NXB3WWZPYUdVa3J4ZF9nb3JSS3RNQVo5NFoydkkzREFzelM5Wm85ZXI0RXF2VmRETnRlR09yT0I2VjlGYW0yNUdF?oc=5", source:"\"Assa Abloy strategy innovation\" - Google News", abstract:"ASSA ABLOY held an inspiring and well-attended Capital Markets Day in 2025, providing investors and analysts with an update on the company\u0027s strategic direction, financial targets, and innovation pipeline. This event is a key reference point for understanding ASSA ABLOY\u0027s long-term ambitions and investment priorities.", published:"Fri, 21 Nov 2025 08:00:00 GMT", score:8 },
   
-  "8b54a5330d77": { id:"8b54a5330d77", customer:"Assa Abloy", title:"ASSA ABLOY digital access solutions at Intersec 2026 - SourceSecurity.com", url:"https://news.google.com/rss/articles/CBMi1gFBVV95cUxQcjVNaGxoWF8wUENsMDJhMGQxSWExdDBESHlmWjZhVXhONGkySVV0QVNvNHZiUkpVcnExYUtMRHNKMGgtejh2Ylkwd1FfaHN6Qk1aNnVUTnNxUS1wMWdleVMxM01zUlVqSEZreXZpdHJRTnVVUDhid0dKS0VxWmRMM2lVekphd3hwMV9pU19EWFpFUmZYOGZEc3J0M3BvckFnTV94ZmxuZnFtLUUxX0xVN2dxdVdzb080RUwyakpMU1VwZ3RpU2QwUzZnVG95ZEFPa0JGNlhB?oc=5", source:"\"Assa Abloy digital banking technology\" - Google News", abstract:"ASSA ABLOY is showcasing its digital access solutions at Intersec 2026, highlighting the company\u0027s push into smart security and digital access technology for commercial and institutional markets. This event presence signals ASSA ABLOY\u0027s strategic focus on expanding its digital portfolio and global brand visibility in the security sector.", published:"Mon, 15 Dec 2025 08:00:00 GMT", score:7 },
+  "ce790cc1d15c": { id:"ce790cc1d15c", customer:"Assa Abloy", title:"ASSA ABLOY hosts its Capital Markets Day - Assa Abloy", url:"https://news.google.com/rss/articles/CBMihwFBVV95cUxPMi11bGoyUmgyQlQxX0FjY19Jd1hBUmpKY3pYaDNxMmo4MWZPLTl3V2tCQkhLbEs5RVJiSW5Ib2xJaEVyd0JwWm5JWkFTSnV5OER6SVhvZDFqcE1vaUpTTW81M21ZMWZVSFZlcFJoLWhRNm5MWTdyeGZ6ZHliRmtONFZxRmY2Wnc?oc=5", source:"\"Assa Abloy strategy innovation\" - Google News", abstract:"ASSA ABLOY hosted its Capital Markets Day, offering a platform to communicate strategic priorities, financial outlook, and product innovation to the investment community. This is a critical event for understanding the company\u0027s forward-looking strategy and areas of focus for technology partnerships.", published:"Wed, 19 Nov 2025 08:00:00 GMT", score:8 },
   
-  "db7aeb891de3": { id:"db7aeb891de3", customer:"Assa Abloy", title:"Doors Company Evaluation Report 2025 | ASSA ABLOY, LIXIL, and JELD-WEN Lead with Smart Security, Sustainable Solutions, and Strategic Expansions - ResearchAndMarkets.com - Business Wire", url:"https://news.google.com/rss/articles/CBMiwgJBVV95cUxNRnRYU1JuWGRMSFR1SUtBbk1MMmRfbUFBSU52YUxRM2ZYSDRHby02MW53Q3VPdlJPeWJyS1Jfc3lueFFNRGpNa3lXY1BJNlBZekR2aERMTzQyeDlENUFGeW1qUTlmQTVIWENEdkcxWXZsNlp1X1A0VHNnT2V0X2lzU1MyZjFJUnJCUjYtU0hBVThkWFFTbExuY2pqdl9wNndaRUhxT2ExX2ZXQWRqM0RGc3F0d2ZZeWo0bXBoU1VUdFNBUTdXakJVVUpEV2xqNXFOR1dxX09nZ0dBdzhoRGFRa1laOXMzYjlyWGRGNHBfVDBzWE9fdm5JbDluUTU1eDc2Z3NCb0JQUlpDVjJ6cVVzNDUtdFNraTFDSm9nRXROTE8xZjRUOFE2Q3dOeGNEdkZJRVFKZFdlN1dqZmlUWVVQMlZ3?oc=5", source:"\"Assa Abloy strategy innovation\" - Google News", abstract:"A 2025 industry evaluation report positions ASSA ABLOY alongside LIXIL and JELD-WEN as leaders in smart security, sustainable solutions, and strategic market expansion in the doors and hardware sector. The report underscores ASSA ABLOY\u0027s competitive differentiation through innovation and sustainability commitments across global markets.", published:"Thu, 11 Sep 2025 07:00:00 GMT", score:7 },
+  "35d7aa2cd8c4": { id:"35d7aa2cd8c4", customer:"Assa Abloy", title:"Earnings call transcript: Assa Abloy Q1 2026 shows resilience amid FX headwinds - Investing.com", url:"https://news.google.com/rss/articles/CBMizwFBVV95cUxOUzFkWHJMQ3dmSF9GMUo4RXFPNENMWkJneXN0cm9qbnpSVWxmQzFUTl9lTWZTQkJ5YUdHYnJQeGg4RkZ3elNibmdOODJkX2cxN3lTelBHVGtQSS1SYmRkWjNpWE1DUGdsQ1A2bU01NFNRNkV1Y215Tkx4RWlxVG93dW5LWWhLUHFyRkJVY2xvbUN2eVF5SWZJTnZHenNIaS1aNHFrTlRXLVRjT3FZbE9QNERxNjhxcGFUY2cyRnlYakNLalpJc0F3MjBIN3JoM0U?oc=5", source:"\"Assa Abloy strategy innovation\" - Google News", abstract:"ASSA ABLOY\u0027s Q1 2026 earnings call transcript reveals resilience in financial performance despite foreign exchange headwinds, with analysts and investors focused on organic growth and margin trends. This is highly relevant for understanding the company\u0027s current financial health and near-term strategic priorities ahead of TAM meetings.", published:"Tue, 28 Apr 2026 07:00:00 GMT", score:8 },
   
-  "8d39c5b1051f": { id:"8d39c5b1051f", customer:"Assa Abloy", title:"Sustainability remains a growth driver for ASSA ABLOY - Assa Abloy", url:"https://news.google.com/rss/articles/CBMisgFBVV95cUxQVUhCb21YVWhVSTdQcGNNWXFjQzNLRDl2X0tlRjR3dHcwUjUzUjh5VzFYYTA3TGtubWFDNGhuOE90OUtBSnZIWDZtSnhCSWRRWWlYWnBwa3BHMXV4RllXM3ZqekNJcjAweEFRRHBhdk5kOWJodktwb1FYVXRBVGVoTW90dE5iZmd5VFFsb3RKcEo0djlkcm9sZHN3ZmNpc2tQWDcyazZ3NVFZREFuOUptNHd3?oc=5", source:"\"Assa Abloy strategy innovation\" - Google News", abstract:"ASSA ABLOY highlights sustainability as a continued growth driver, integrating environmental performance metrics into its broader business strategy and investor communications. This reflects the company\u0027s belief that ESG commitments are not just compliance obligations but genuine levers for revenue growth and market differentiation.", published:"Fri, 27 Mar 2026 07:00:00 GMT", score:7 },
+  "799c4bd53276": { id:"799c4bd53276", customer:"Assa Abloy", title:"ASSA ABLOY digital solutions for security specifications - SourceSecurity.com", url:"https://news.google.com/rss/articles/CBMivgFBVV95cUxPNWRPbFc4WWdtUF93a1diVDdPd3V6RVpUeFJMUk1rako2RzZtM0I2QXdjbUF0ZWdaYURxR1hqUk8wUFdDTF80RzR6ZkUyUVdLczZXOGg5bW9TeHQzMG1iU0JZLVFMOWVOY0N6Y2cwd1NaTGptV3dCRGotYVFSWGxURmpwcHhDdnpSdWNOQ25uOEV0bkVYOExmY25uNkNEOUtXel82XzJWTGNXamhycW1TWFFEYVA0TGgzNXdMc21B?oc=5", source:"\"Assa Abloy digital banking technology\" - Google News", abstract:"ASSA ABLOY is promoting its digital solutions for security specifications, reinforcing its position as a leader in integrated digital access and security systems. This article underscores the company\u0027s focus on helping specifiers and architects incorporate digital security into building projects.", published:"Tue, 19 Nov 2024 08:00:00 GMT", score:7 },
   
-  "d359c2b94d9c": { id:"d359c2b94d9c", customer:"Assa Abloy", title:"ASSA ABLOY acquires Lawrence Hardware and Gallery Specialty in Canada - Assa Abloy", url:"https://news.google.com/rss/articles/CBMihwFBVV95cUxQdzQwM2l1aHBJLXRuVUdmWjUtSGtSOWMxd3lsSnN4NGx2eXdiQXZ3VjhiaE1fWkZNbzRHTXNxTUxpT1d2U1Y1S2Y1V1VzVS1mbnFXdlhYRVBmMWxqSjdob2hkLUhLamJnV20xOUJfQzVBQlBnSnZCSFdOUmdzVGUyM2JkZlNRdEU?oc=5", source:"\"Assa Abloy strategy innovation\" - Google News", abstract:"ASSA ABLOY has acquired Lawrence Hardware and Gallery Specialty in Canada, expanding its hardware portfolio and distribution capabilities in the North American market. This acquisition reflects the company\u0027s active M\u0026A strategy to grow market share and product breadth across its Americas division.", published:"Wed, 06 Sep 2023 07:00:00 GMT", score:7 },
+  "7443f85ad343": { id:"7443f85ad343", customer:"Assa Abloy", title:"Sustainability is a Sixth Wave of Innovation. Energy-harvesting access control puts you ahead of the curve - Assa Abloy", url:"https://news.google.com/rss/articles/CBMipAFBVV95cUxOMzNVUWZ6c3lqRUYxcFRQeHFqZkFLSnkwdk40TWNFaFZ3ajAyeERUS0NXTUFmOVpRTEFKV2Y4aE56dnpBNWxjY0VwTzNWZTMxbTZRcFpUT0JVSDhXbEYwak9uclhoNV9UUEt3VVJRS1VSQkRKbEdWWWtWbE5vWHZOMUhmMFZWNlNaOEppazhzTnJ0OURGQ3lwejJPaTVUdFRPQmFhaQ?oc=5", source:"\"Assa Abloy strategy innovation\" - Google News", abstract:"ASSA ABLOY positions sustainability and energy-harvesting access control as a sixth wave of innovation, arguing that environmentally friendly solutions also deliver competitive advantage. This reflects the company\u0027s strategy to integrate green technology into its core product offerings.", published:"Mon, 19 Jun 2023 07:00:00 GMT", score:7 },
   
-  "489e7d2e92dd": { id:"489e7d2e92dd", customer:"Assa Abloy", title:"Assa Abloy acquires another physical access control provider - Biometric Update", url:"https://news.google.com/rss/articles/CBMioAFBVV95cUxOb1dPNWc3eWFHZXcxR3VuVEpFeFAyQW5SbTV5UEZiSG05WjZjUGRaZ3FDWUJSZURCZVp2dXRrbEVRLWRyMjhqLXhuU3lXMnNzcllVRXdqTC01QkFaWFNja1M5MEtmMUxXZVIzamVCRWJWSUtWbU41V0JXNTh2Njg3dGR5cXZQWm1VcnIyTFlGbGRlNVZOUWtTSHYwcEpCUm1G?oc=5", source:"\"Assa Abloy digital banking technology\" - Google News", abstract:"ASSA ABLOY has acquired another physical access control provider, further strengthening its biometric and digital access control capabilities. This move aligns with the company\u0027s strategy to consolidate the access control market and expand its Commerce platform with complementary technology assets.", published:"Mon, 22 Jul 2024 07:00:00 GMT", score:7 },
+  "999810b6d9a9": { id:"999810b6d9a9", customer:"Assa Abloy", title:"Smart keys and cylinders simplify the switch from mechanical to digital access - Assa Abloy", url:"https://news.google.com/rss/articles/CBMihgFBVV95cUxNdWJWM3F2N3R0SWdMZGZVRkYzeERhei1iSzRhVFUwd2ROZGNLWUpfUGdyMzhwbXpWZ2V3Si1SMXZmUGR1aEI1S3JDRnhLdTdYVlBXaGVFM3ZtV2VPNzcyQ3BTaXBPeUV4NlBzLVpUQTJkWmp3N25RTVNPdWRZUmh3SGdkbVE1dw?oc=5", source:"\"Assa Abloy digital banking technology\" - Google News", abstract:"ASSA ABLOY highlights how smart keys and cylinders are enabling a simplified transition from mechanical to digital access control for end users. This product-level insight is relevant to understanding how ASSA ABLOY is addressing the market shift toward digitization in physical security.", published:"Tue, 05 May 2026 07:00:00 GMT", score:7 },
   
-  "ce790cc1d15c": { id:"ce790cc1d15c", customer:"Assa Abloy", title:"ASSA ABLOY hosts its Capital Markets Day - Assa Abloy", url:"https://news.google.com/rss/articles/CBMihwFBVV95cUxPMi11bGoyUmgyQlQxX0FjY19Jd1hBUmpKY3pYaDNxMmo4MWZPLTl3V2tCQkhLbEs5RVJiSW5Ib2xJaEVyd0JwWm5JWkFTSnV5OER6SVhvZDFqcE1vaUpTTW81M21ZMWZVSFZlcFJoLWhRNm5MWTdyeGZ6ZHliRmtONFZxRmY2Wnc?oc=5", source:"\"Assa Abloy strategy innovation\" - Google News", abstract:"ASSA ABLOY hosted its Capital Markets Day, presenting its long-term strategy to investors and analysts including goals around digital access, sustainability, and acquisitive growth. The event signals confidence in the company\u0027s multi-divisional structure and its ability to deliver value through both organic and inorganic initiatives.", published:"Wed, 19 Nov 2025 08:00:00 GMT", score:7 },
+  "8d39c5b1051f": { id:"8d39c5b1051f", customer:"Assa Abloy", title:"Sustainability remains a growth driver for ASSA ABLOY - Assa Abloy", url:"https://news.google.com/rss/articles/CBMisgFBVV95cUxQVUhCb21YVWhVSTdQcGNNWXFjQzNLRDl2X0tlRjR3dHcwUjUzUjh5VzFYYTA3TGtubWFDNGhuOE90OUtBSnZIWDZtSnhCSWRRWWlYWnBwa3BHMXV4RllXM3ZqekNJcjAweEFRRHBhdk5kOWJodktwb1FYVXRBVGVoTW90dE5iZmd5VFFsb3RKcEo0djlkcm9sZHN3ZmNpc2tQWDcyazZ3NVFZREFuOUptNHd3?oc=5", source:"\"Assa Abloy strategy innovation\" - Google News", abstract:"ASSA ABLOY reports that sustainability continues to be a significant growth driver for the company, influencing both product development and investor relations. This reflects the company\u0027s long-term commitment to embedding environmental responsibility into its business strategy.", published:"Fri, 27 Mar 2026 07:00:00 GMT", score:7 },
   
-  "669fe0fea4be": { id:"669fe0fea4be", customer:"Assa Abloy", title:"Investors: we appreciate ASSA ABLOY\u2019s commitment to sustainability - Assa Abloy", url:"https://news.google.com/rss/articles/CBMiwAFBVV95cUxON2VoWVNiV1FKZkUzRHlvUjdKSUZ2a0FkUmxwTW9PSW5SOVYxZWhmbWYtdWthMEx3VVhIY29DSVo5TXhfTHNWZ2psQzNIQzdjQ3JBWEZUN0J4ZlFqenlXUmx6TktZR0prdHp6VjZIa2ZqRDR6TXp5NjI4MDJQdVQwM3Z6dThLVmlfSWdUTGVHNWpmeFVqdDFIX2dnRFNpN0NuNVhaYkVWMTFQVTRGWjJma2ozWGdfbU1rZmtqVEcyV3c?oc=5", source:"\"Assa Abloy strategy innovation\" - Google News", abstract:"ASSA ABLOY reports that investors are increasingly valuing its commitment to sustainability, reinforcing the business case for continued ESG investment across product development and operations. Investor appreciation for these initiatives may influence strategic priorities and capital allocation decisions going forward.", published:"Tue, 23 Aug 2022 07:00:00 GMT", score:6 },
+  "d46fc674c0d4": { id:"d46fc674c0d4", customer:"Assa Abloy", title:"ASSA ABLOY acquires MR Group\u00b4s hardware division in Portugal - Assa Abloy", url:"https://news.google.com/rss/articles/CBMihwFBVV95cUxPSU5iWW5TbW9KRC1uQjh6R0VTZ1h2dmV1M0Q2TURhd2pVSXJZRUlTWS1Pd1dKd0R6UnhpUEdQa3pTd04zNkdWejh3d2M2Y2Z2RzRwNGd2NTl2ZmxVU0N4Wno2UmVzMmN2NUNGRno0dDFFOWppeTNMYi1jb0d5b09nMC0zRTJIT2s?oc=5", source:"\"Assa Abloy strategy innovation\" - Google News", abstract:"ASSA ABLOY has acquired MR Group\u0027s hardware division in Portugal, continuing its strategy of bolt-on acquisitions to expand its EMEA footprint. This move reflects the company\u0027s ongoing ambition to consolidate the European hardware and security market.", published:"Tue, 01 Jun 2021 07:00:00 GMT", score:7 },
   
-  "1feb6e4220d1": { id:"1feb6e4220d1", customer:"Assa Abloy", title:"Sustainability is a clear driver for economic growth - Assa Abloy", url:"https://news.google.com/rss/articles/CBMisAFBVV95cUxNOUpPYlk5RU5aamZLVTlqcC1kRE5kTUdCS3JlUzlIQjV3alFYZmFFaUp2VHdtdmNWcjY0R2V1M1dqOUNNcWZVaDh4bkdtT1FZcE1Qd0tQR0wyU3VEU1k2WDVZWWFubnB3LVQ1YWNtYUlITXEyYno5NG05Q1hGVG81WFQtTTc2eVRHenZIdW52MFRKZV9sNjZETHVzb3NwazBhbWVUMjd2Q2JKMUhONmt5OA?oc=5", source:"\"Assa Abloy strategy innovation\" - Google News", abstract:"ASSA ABLOY positions sustainability as a clear economic growth driver, arguing that green product innovation and responsible operations contribute directly to financial performance. This narrative aligns with broader market trends where sustainability credentials are becoming a purchasing criterion for institutional and commercial customers.", published:"Tue, 12 Sep 2023 07:00:00 GMT", score:6 },
+  "d359c2b94d9c": { id:"d359c2b94d9c", customer:"Assa Abloy", title:"ASSA ABLOY acquires Lawrence Hardware and Gallery Specialty in Canada - Assa Abloy", url:"https://news.google.com/rss/articles/CBMihwFBVV95cUxQdzQwM2l1aHBJLXRuVUdmWjUtSGtSOWMxd3lsSnN4NGx2eXdiQXZ3VjhiaE1fWkZNbzRHTXNxTUxpT1d2U1Y1S2Y1V1VzVS1mbnFXdlhYRVBmMWxqSjdob2hkLUhLamJnV20xOUJfQzVBQlBnSnZCSFdOUmdzVGUyM2JkZlNRdEU?oc=5", source:"\"Assa Abloy strategy innovation\" - Google News", abstract:"ASSA ABLOY has acquired Lawrence Hardware and Gallery Specialty in Canada, further strengthening its Americas business unit through targeted acquisitions. This is consistent with the company\u0027s decentralized, acquisition-led growth model across multiple geographies.", published:"Wed, 06 Sep 2023 07:00:00 GMT", score:7 },
   
-  "791e5ca0ab0c": { id:"791e5ca0ab0c", customer:"Assa Abloy", title:"ASSA ABLOY Entrance Systems drives innovation at Horizon 29 with OH1142P Dual Drive installation - Assa Abloy", url:"https://news.google.com/rss/articles/CBMi2AFBVV95cUxQM20xOHhzZkE0aVhDbko1RVNCMHZZYkVIU2JkSUVaWFAtMU9WMi1UeEY0cFJQYlY2QkMzdGljWDI3QldoamlZdWNUOVFnZHhoN0JScmtJRDFVNTN4RElFZmVsYzYxRXZaUURHMGVQWDJMbEstNXJndjBKalpTdWNSNWpqSUZVREhrNlc4dDhxRTVpWlB4TEYzR1d6ajh3RGh5VUFTdmhKSDhxOUE3RUkweVB2RHdKWGkxRmJhMEJ6S1FSQW9mV1AybXdhb19pdHlWUThXV2dMbXc?oc=5", source:"\"Assa Abloy strategy innovation\" - Google News", abstract:"ASSA ABLOY Entrance Systems is driving innovation through its OH1142P Dual Drive installation at Horizon 29, demonstrating advanced automated door solutions for large-scale commercial environments. This highlights the company\u0027s continued investment in entrance system technology across its independently operating business units.", published:"Wed, 17 Sep 2025 07:00:00 GMT", score:6 },
+  "f1adbb0c6752": { id:"f1adbb0c6752", customer:"Assa Abloy", title:"ASSA ABLOY acquires Wesko Locks - Security Systems News", url:"https://news.google.com/rss/articles/CBMigAFBVV95cUxQZFZwU2xOOUxtaDBVSkdEUWhhZk1hbmd3UHBuLUJuR2ZMT294SFVzblRnZFA0WWp0QndVVF93S2U1MjNtYUlTN0dYMjJxRkxtd1R6dk02bll1ay1ObmJpbjJFVFljSUpFT1NYYWQ5eWh3YTZLRk1IMWFDd2NPUzJTcg?oc=5", source:"\"Assa Abloy strategy innovation\" - Google News", abstract:"ASSA ABLOY has acquired Wesko Locks, adding another security hardware brand to its growing portfolio. This acquisition is part of ASSA ABLOY\u0027s broader strategy to expand its product range and market coverage in the locking and access control sector.", published:"Wed, 26 Jun 2024 07:00:00 GMT", score:7 },
   
 };
 
-// ── Init ───────────────────────────────────────────────────────────────────
 applyState();
 </script>
 </body>
